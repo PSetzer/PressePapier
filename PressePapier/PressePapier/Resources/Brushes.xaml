@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="DefaultBrush" Color="Black" />
+    <SolidColorBrush x:Key="ButtonDefaultBrush" Color="#FF084DB4" />
+    <SolidColorBrush x:Key="ScrollBrushTb" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="ScrollBkgTb" Color="White" />
+    <SolidColorBrush x:Key="ScrollBrushGrd" Color="White" />
+    <SolidColorBrush x:Key="ScrollBkgGrd" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="RadioButtonBkgBrush" Color="#FF084DB4" />
+    <SolidColorBrush x:Key="RadioButtonTextBrush" Color="White" />
+    <SolidColorBrush x:Key="RadioButtonClickedBkgBrush" Color="#FFE6E6E6" />
+    <SolidColorBrush x:Key="RadioButtonClickedTextBrush" Color="#FF084DB4" />
+    <SolidColorBrush x:Key="MouseOverBrush" Color="#FF084DB4" />
+    <SolidColorBrush x:Key="MouseClicBrush" Color="DodgerBlue" />
+
+</ResourceDictionary>
