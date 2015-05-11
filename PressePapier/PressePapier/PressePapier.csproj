@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ClipBoard.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="InputSimulator, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -127,6 +130,8 @@
     <Resource Include="Resources\ClipBoard.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Setup Inno\PressePapierSetup.exe" />
+    <Content Include="Setup Inno\SetupFile.iss" />
     <Resource Include="ClipBoard.ico" />
     <Content Include="InputSimulator.dll" />
   </ItemGroup>
