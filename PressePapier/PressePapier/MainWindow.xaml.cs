@@ -40,8 +40,8 @@ namespace PressePapier
         System.Windows.Threading.DispatcherTimer messageTimer = new System.Windows.Threading.DispatcherTimer();
         private bool blnShowTooltip = true;
         */
-
         System.Windows.Threading.DispatcherTimer timerNotifEnreg = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer timerNotifCopy = new System.Windows.Threading.DispatcherTimer();
 
         public MainWindow()
         {
@@ -52,7 +52,6 @@ namespace PressePapier
         {
             try
             {
-                InitWindow();
                 InitKeys();
                 InitControles();
                 gestionFichier.VerifPresenceFichierConfig();
@@ -63,13 +62,6 @@ namespace PressePapier
                 
                 throw;
             }
-        }
-
-        private void InitWindow()
-        {
-            this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
-            this.Width = stackPanel1.Margin.Left + stackPanel1.Width + 40;
-            maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
         }
 
         private void InitKeys()
@@ -88,6 +80,11 @@ namespace PressePapier
 
         private void InitControles()
         {
+            this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
+            this.Width = stackPanel1.Margin.Left + stackPanel1.Width + 40;
+            this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+            maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
+            
             rbCtrl.IsChecked = true;
             lblNotifEnreg.Visibility = Visibility.Hidden;
             txtbFichierEnCours.Text = "";
@@ -108,6 +105,8 @@ namespace PressePapier
 
             timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
             timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
+            timerNotifCopy.Tick += new EventHandler(timerNotifCopy_Tick);
+            timerNotifCopy.Interval = new TimeSpan(0, 0, 0, 1, 0);
         }
 
 	#endregion
@@ -177,6 +176,11 @@ namespace PressePapier
                                     break;
                                 }
                         }
+
+                        nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+                        this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+                        timerNotifCopy.Stop();
+                        timerNotifCopy.Start();
                     }
                 }
                 else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && rbCtrl.IsChecked == true ||
@@ -516,12 +520,6 @@ namespace PressePapier
             }
             else e.Handled = true;
         }
-
-        private void timerNotifEnreg_Tick(object sender, EventArgs e)
-        {
-            lblNotifEnreg.Visibility = Visibility.Hidden;
-            timerNotifEnreg.Stop();
-        }
 	#endregion
 
     #endregion
@@ -648,12 +646,6 @@ namespace PressePapier
             GestionDisplayTooltip();
         }
 
-        private void messageTimer_Tick(object sender, EventArgs e)
-        {
-            blnShowTooltip = true;
-            messageTimer.Stop();
-        }
-
         private void GestionDisplayTooltip()
         {
             Dictionary<string, string> textes = GetTextes();
@@ -676,5 +668,26 @@ namespace PressePapier
     #endregion
     #endregion
 
+    #region gestion Timers
+        /* gestion TooTip => désactivée pour le moment
+        private void messageTimer_Tick(object sender, EventArgs e)
+        {
+            blnShowTooltip = true;
+            messageTimer.Stop();
+        }
+        */
+        private void timerNotifEnreg_Tick(object sender, EventArgs e)
+        {
+            lblNotifEnreg.Visibility = Visibility.Hidden;
+            timerNotifEnreg.Stop();
+        }
+
+        private void timerNotifCopy_Tick(object sender, EventArgs e)
+        {
+            nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+            timerNotifCopy.Stop();
+        }
+    #endregion
     }
 }
