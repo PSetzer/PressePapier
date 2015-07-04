@@ -66,6 +66,8 @@ namespace PressePapier
                 lstKeys.Add(Key.D0);
 
                 rbCtrl.IsChecked = true;
+                txtbFichierEnCours.Text = "";
+                txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
                 gestionFichier.VerifPresenceFichierConfig();
 
@@ -448,10 +450,14 @@ namespace PressePapier
             try
             {
                 string pathFichier = GetPathFichier();
-                Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
-                SetTextes(textes);
-                lblFichierEnCours.Content = GetNomFichier(pathFichier);
-                gestionFichier.MajFichierOuvert(pathFichier);
+
+                if(pathFichier != "")
+                { 
+                    Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
+                    SetTextes(textes);
+                    txtbFichierEnCours.Text = gestionFichier.GetNomFichier(pathFichier);
+                    gestionFichier.MajFichierOuvert(pathFichier);
+                }
             }
             catch (Exception)
             {
@@ -465,10 +471,14 @@ namespace PressePapier
             try
             {
                 string pathFichier = GetPathFichier();
-                Dictionary<string, string> textes = GetTextes();
-                gestionFichier.SauvegardeFichier(textes, pathFichier);
-                lblFichierEnCours.Content = GetNomFichier(pathFichier);
-                gestionFichier.MajFichierOuvert(pathFichier);
+
+                if (pathFichier != "")
+                {
+                    Dictionary<string, string> textes = GetTextes();
+                    gestionFichier.SauvegardeFichier(textes, pathFichier);
+                    txtbFichierEnCours.Text = gestionFichier.GetNomFichier(pathFichier);
+                    gestionFichier.MajFichierOuvert(pathFichier);
+                }
             }
             catch (Exception)
             {
@@ -479,6 +489,8 @@ namespace PressePapier
 
         private static string GetNomFichier(string pathFichier)
         {
+            string nomFichier = "";
+
             try
             {
                 if (pathFichier != "")
@@ -486,15 +498,26 @@ namespace PressePapier
                     string nomFichierAvecExt = pathFichier.Split('\\').Last<string>();
                     string extension = nomFichierAvecExt.Split('.').Last<string>();
                     var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile<string>(item => item != extension);
-                    return elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
+                    nomFichier = elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
                 }
-                else return "";
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
+
+            return nomFichier;
+        }
+
+        private void txtbFichierEnCours_ToolTipOpening(object sender, ToolTipEventArgs e)
+        {
+            txtbFichierEnCours.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+            if (txtbFichierEnCours.DesiredSize.Width > txtbFichierEnCours.MaxWidth)
+            {
+                txtbFichierEnCours.ToolTip = txtbFichierEnCours.Text;
+            }
+            else e.Handled = true;
         }
 	#endregion
 

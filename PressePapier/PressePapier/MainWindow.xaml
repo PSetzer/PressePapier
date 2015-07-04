@@ -74,7 +74,7 @@
                     <TextBox AcceptsReturn="True" FontSize="13" Height="20" Name="textBox10" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
                 </StackPanel>
             </Grid>
-        </ScrollViewer>
-        <Label Content="lblFichierEnCours" Height="28" HorizontalAlignment="Left" Margin="10,10,0,0" Name="lblFichierEnCours" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" />
+        </ScrollViewer>    
+        <TextBlock Name="txtbFichierEnCours" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="" ToolTipOpening="txtbFichierEnCours_ToolTipOpening">lblFichierEnCours</TextBlock>
     </Grid>
 </Window>
