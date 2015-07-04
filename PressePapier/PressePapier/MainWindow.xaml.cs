@@ -446,17 +446,18 @@ namespace PressePapier
             }
         }
 
-        private void GestionChargementFichier(Func<string> GetNomFichier)
+        private void GestionChargementFichier(Func<string> GetPathFichier)
         {
             try
             {
-                string pathFichier = GetNomFichier();
+                string pathFichier = GetPathFichier();
                 
                 if (pathFichier != "")
                 {
                     Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
                     SetTextes(textes);
-                    MajFichierOuvert(pathFichier);
+                    lblFichierEnCours.Content = GetNomFichier(pathFichier);
+                    gestionFichier.MajFichierOuvert(pathFichier);
                 }
             }
             catch (Exception)
@@ -466,17 +467,18 @@ namespace PressePapier
             }
         }
 
-        private void GestionEnregFichier(Func<string> GetNomFichier)
+        private void GestionEnregFichier(Func<string> GetPathFichier)
         {
             try
             {
-                string pathFichier = GetNomFichier();
+                string pathFichier = GetPathFichier();
 
                 if (pathFichier != "")
                 {
                     Dictionary<string, string> textes = GetTextes();
                     gestionFichier.SauvegardeFichier(textes, pathFichier);
-                    MajFichierOuvert(pathFichier);
+                    lblFichierEnCours.Content = GetNomFichier(pathFichier);
+                    gestionFichier.MajFichierOuvert(pathFichier);
                 }
             }
             catch (Exception)
@@ -486,17 +488,14 @@ namespace PressePapier
             }
         }
 
-        private void MajFichierOuvert(string pathFichier)
+        private static string GetNomFichier(string pathFichier)
         {
             try
             {
-                if (pathFichier != "")
-                {
-                    string nomFichier = pathFichier.Split('\\').Last<string>();
-                    lblFichierEnCours.Content = nomFichier;
-
-                    gestionFichier.MajFichierOuvert(pathFichier);
-                }
+                string nomFichierAvecExt = pathFichier.Split('\\').Last<string>();
+                string extension = nomFichierAvecExt.Split('.').Last<string>();
+                var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile<string>(item => item != extension);
+                return elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
             }
             catch (Exception)
             {
