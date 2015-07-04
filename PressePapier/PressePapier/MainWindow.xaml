@@ -1,7 +1,7 @@
 ﻿<Window x:Class="PressePapier.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PressePapier" WindowStyle="None" BorderThickness="0" AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="588" Width="418" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Icon="/PressePapier;component/Resources/ClipBoard.ico" Name="PressePapier" StateChanged="Window_StateChanged">
+        Title="PressePapier" WindowStyle="None" BorderThickness="0" AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="598" Width="418" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Icon="/PressePapier;component/Resources/ClipBoard.ico" Name="PressePapier" StateChanged="Window_StateChanged">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -17,21 +17,21 @@
 
     <Grid Name="windowGrid">
         <Border BorderBrush="#FF084DB4" BorderThickness="2" Height="30" HorizontalAlignment="Left" Margin="0,519,0,0" Name="border1" VerticalAlignment="Top" Width="292" />
-        <Button Style="{StaticResource BoutonAction}" Height="50" Margin="59,56,0,0" Name="btnEnregistrer" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" Click="btnEnregistrer_Click" HorizontalAlignment="Left" Width="97" Background="#FF084DB4" Content="Enregistrer"></Button>
-        <Button Style="{StaticResource BoutonAction}" Height="50" Margin="262,56,0,0" Name="btnCharger" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" HorizontalAlignment="Left" Width="97" Click="btnCharger_Click" Background="#FF084DB4" Content="Charger"></Button>
-        <Button Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="262,109,0,0" Name="btnRecharger" VerticalAlignment="Top" Width="97" Background="#FF084DB4" Content="Recharger" Click="btnCharger_Click"></Button>
-        <Button Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="159,109,0,0" Name="btnEffacer" VerticalAlignment="Top" Width="100" Background="#FF084DB4" Content="Effacer" Click="btnEffacer_Click"></Button>
-        <Button Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" Margin="59,109,0,0" Name="btnEnregSous" Width="97" Height="50" VerticalAlignment="Top" Background="#FF084DB4" Click="btnEnregistrer_Click">
+        <Button Style="{StaticResource BoutonAction}" Height="50" Margin="59,66,0,0" Name="btnEnregistrer" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" Click="btnEnregistrer_Click" HorizontalAlignment="Left" Width="97" Background="#FF084DB4" Content="Enregistrer"></Button>
+        <Button Style="{StaticResource BoutonAction}" Height="50" Margin="262,66,0,0" Name="btnCharger" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" HorizontalAlignment="Left" Width="97" Click="btnCharger_Click" Background="#FF084DB4" Content="Charger"></Button>
+        <Button Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="262,119,0,0" Name="btnRecharger" VerticalAlignment="Top" Width="97" Background="#FF084DB4" Content="Recharger" Click="btnCharger_Click"></Button>
+        <Button Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="159,119,0,0" Name="btnEffacer" VerticalAlignment="Top" Width="100" Background="#FF084DB4" Content="Effacer" Click="btnEffacer_Click"></Button>
+        <Button Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" Margin="59,119,0,0" Name="btnEnregSous" Width="97" Height="50" VerticalAlignment="Top" Background="#FF084DB4" Click="btnEnregistrer_Click">
             <TextBlock VerticalAlignment="Center" TextAlignment="Center" Height="30" Width="97">Enregistrer<LineBreak/>sous</TextBlock>
         </Button>
         <Button Style="{StaticResource BoutonToolBox}" Content="_" Height="36" Margin="0,-1,29,0" Name="btnMinimiser" VerticalAlignment="Top" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" Foreground="#FF0066CC" FontFamily="Trebuchet MS" FontSize="22" FontWeight="Bold" Click="btnMinimiser_Click" BorderThickness="0" HorizontalAlignment="Right" Width="19" />
         <Button Style="{StaticResource BoutonToolBox}" Content="x" Height="33" HorizontalAlignment="Right" Margin="0,2,7,0" Name="btnFermer" VerticalAlignment="Top" Width="22" FontFamily="Trebuchet MS" FontSize="22" FontWeight="Bold" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" Foreground="#FF0066CC" Click="btnFermer_Click" />
-        <Grid Height="50" HorizontalAlignment="Left" Margin="159,56,0,0" Name="grdModif" VerticalAlignment="Top" Width="100" Background="#FF084DB4">
+        <Grid Height="50" HorizontalAlignment="Left" Margin="159,66,0,0" Name="grdModif" VerticalAlignment="Top" Width="100" Background="#FF084DB4">
             <RadioButton Style="{StaticResource ModifRadioButton}" Content="Alt" Height="20" HorizontalAlignment="Left" Margin="52,25,0,0" Name="rbAlt" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="White" Checked="rbAlt_Checked" Unchecked="rbAlt_Unchecked" Width="40" />
             <RadioButton Style="{StaticResource ModifRadioButton}" Content="Ctrl" Height="20" Name="rbCtrl" Width="40" Margin="8,25,0,0" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="White" Checked="rbCtrl_Checked" Unchecked="rbCtrl_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <Label Content="Modifieur" Height="28" HorizontalAlignment="Left" Margin="13,1,0,0" Name="lblModif" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="White" />
         </Grid>
-        <ScrollViewer Style="{DynamicResource ScrollViewerGrd}" Height="335" HorizontalAlignment="Left" Margin="2,193,0,0" Name="svTextBox" VerticalAlignment="Top" Width="394" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Style="{DynamicResource ScrollViewerGrd}" Height="335" HorizontalAlignment="Left" Margin="2,203,0,0" Name="svTextBox" VerticalAlignment="Top" Width="394" VerticalScrollBarVisibility="Auto">
             <Grid Height="335" Name="grdTextBox" Width="394" VerticalAlignment="Top" >
                 <Label Content="1" Height="28" HorizontalAlignment="Left" Margin="31,-6,0,0" Name="label1" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
                 <Label Content="2" Height="28" HorizontalAlignment="Left" Margin="31,29,0,0" Name="label2" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
@@ -74,7 +74,8 @@
                     <TextBox AcceptsReturn="True" FontSize="13" Height="20" Name="textBox10" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
                 </StackPanel>
             </Grid>
-        </ScrollViewer>    
+        </ScrollViewer>
         <TextBlock Name="txtbFichierEnCours" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="" ToolTipOpening="txtbFichierEnCours_ToolTipOpening">lblFichierEnCours</TextBlock>
+        <Label x:Name="lblNotifEnreg" Content="Enregistrement effectué" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="155" FontFamily="Trebuchet MS" FontSize="13"/>
     </Grid>
 </Window>

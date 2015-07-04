@@ -41,6 +41,8 @@ namespace PressePapier
         private bool blnShowTooltip = true;
         */
 
+        System.Windows.Threading.DispatcherTimer timerNotifEnreg = new System.Windows.Threading.DispatcherTimer();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -66,6 +68,7 @@ namespace PressePapier
                 lstKeys.Add(Key.D0);
 
                 rbCtrl.IsChecked = true;
+                lblNotifEnreg.Visibility = Visibility.Hidden;
                 txtbFichierEnCours.Text = "";
                 txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
@@ -85,6 +88,9 @@ namespace PressePapier
                 messageTimer.Tick += new EventHandler(messageTimer_Tick);
                 messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
                 */
+
+                timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
+                timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
             }
             catch (Exception)
             {
@@ -435,6 +441,9 @@ namespace PressePapier
                     gestionFichier.SauvegardeFichier(textes, pathFichier);
                     txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
                     gestionFichier.MajFichierOuvert(pathFichier);
+                    lblNotifEnreg.Visibility = Visibility.Visible;
+                    timerNotifEnreg.Stop();
+                    timerNotifEnreg.Start();
                 }
             }
             catch (Exception)
@@ -495,6 +504,12 @@ namespace PressePapier
                 txtbFichierEnCours.ToolTip = txtbFichierEnCours.Text;
             }
             else e.Handled = true;
+        }
+
+        private void timerNotifEnreg_Tick(object sender, EventArgs e)
+        {
+            lblNotifEnreg.Visibility = Visibility.Hidden;
+            timerNotifEnreg.Stop();
         }
 	#endregion
 
