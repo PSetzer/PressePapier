@@ -402,6 +402,48 @@ namespace PressePapier
     #endregion
 
     #region méthodes
+        private void GestionChargementFichier(Func<string> GetPathFichier)
+        {
+            try
+            {
+                string pathFichier = GetPathFichier();
+
+                if(pathFichier != "")
+                { 
+                    Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
+                    SetTextes(textes);
+                    txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
+                    gestionFichier.MajFichierOuvert(pathFichier);
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
+        private void GestionEnregFichier(Func<string> GetPathFichier)
+        {
+            try
+            {
+                string pathFichier = GetPathFichier();
+
+                if (pathFichier != "")
+                {
+                    Dictionary<string, string> textes = GetTextes();
+                    gestionFichier.SauvegardeFichier(textes, pathFichier);
+                    txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
+                    gestionFichier.MajFichierOuvert(pathFichier);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         private Dictionary<string, string> GetTextes()
         {
             Dictionary<string, string> textes = new Dictionary<string, string>();
@@ -416,7 +458,7 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
 
@@ -440,74 +482,9 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
-                throw;
-            }
-        }
-
-        private void GestionChargementFichier(Func<string> GetPathFichier)
-        {
-            try
-            {
-                string pathFichier = GetPathFichier();
-
-                if(pathFichier != "")
-                { 
-                    Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
-                    SetTextes(textes);
-                    txtbFichierEnCours.Text = gestionFichier.GetNomFichier(pathFichier);
-                    gestionFichier.MajFichierOuvert(pathFichier);
-                }
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
-        }
-
-        private void GestionEnregFichier(Func<string> GetPathFichier)
-        {
-            try
-            {
-                string pathFichier = GetPathFichier();
-
-                if (pathFichier != "")
-                {
-                    Dictionary<string, string> textes = GetTextes();
-                    gestionFichier.SauvegardeFichier(textes, pathFichier);
-                    txtbFichierEnCours.Text = gestionFichier.GetNomFichier(pathFichier);
-                    gestionFichier.MajFichierOuvert(pathFichier);
-                }
-            }
-            catch (Exception)
-            {
 
                 throw;
             }
-        }
-
-        private static string GetNomFichier(string pathFichier)
-        {
-            string nomFichier = "";
-
-            try
-            {
-                if (pathFichier != "")
-                {
-                    string nomFichierAvecExt = pathFichier.Split('\\').Last<string>();
-                    string extension = nomFichierAvecExt.Split('.').Last<string>();
-                    var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile<string>(item => item != extension);
-                    nomFichier = elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-            return nomFichier;
         }
 
         private void txtbFichierEnCours_ToolTipOpening(object sender, ToolTipEventArgs e)
