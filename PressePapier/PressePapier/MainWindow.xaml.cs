@@ -52,51 +52,62 @@ namespace PressePapier
         {
             try
             {
-                this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
-                this.Width = stackPanel1.Margin.Left + stackPanel1.Width + 40;
-                maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
-
-                lstKeys.Add(Key.D1);
-                lstKeys.Add(Key.D2);
-                lstKeys.Add(Key.D3);
-                lstKeys.Add(Key.D4);
-                lstKeys.Add(Key.D5);
-                lstKeys.Add(Key.D6);
-                lstKeys.Add(Key.D7);
-                lstKeys.Add(Key.D8);
-                lstKeys.Add(Key.D9);
-                lstKeys.Add(Key.D0);
-
-                rbCtrl.IsChecked = true;
-                lblNotifEnreg.Visibility = Visibility.Hidden;
-                txtbFichierEnCours.Text = "";
-                txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
-
+                InitWindow();
+                InitKeys();
+                InitControles();
                 gestionFichier.VerifPresenceFichierConfig();
-
                 GestionChargementFichier(gestionFichier.DernierFichierOuvert);
-
-                nIcon.Text = this.Title;
-                nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
-                nIcon.Click += new EventHandler(nIcon_Click);
-
-                /* gestion TooTip => désactivée pour le moment
-                nIcon.BalloonTipTitle = this.Title;
-                nIcon.BalloonTipClicked += new EventHandler(balloonTip_Clicked);
-                nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
-
-                messageTimer.Tick += new EventHandler(messageTimer_Tick);
-                messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
-                */
-
-                timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
-                timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
             }
             catch (Exception)
             {
                 
                 throw;
             }
+        }
+
+        private void InitWindow()
+        {
+            this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
+            this.Width = stackPanel1.Margin.Left + stackPanel1.Width + 40;
+            maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
+        }
+
+        private void InitKeys()
+        {
+            lstKeys.Add(Key.D1);
+            lstKeys.Add(Key.D2);
+            lstKeys.Add(Key.D3);
+            lstKeys.Add(Key.D4);
+            lstKeys.Add(Key.D5);
+            lstKeys.Add(Key.D6);
+            lstKeys.Add(Key.D7);
+            lstKeys.Add(Key.D8);
+            lstKeys.Add(Key.D9);
+            lstKeys.Add(Key.D0);
+        }
+
+        private void InitControles()
+        {
+            rbCtrl.IsChecked = true;
+            lblNotifEnreg.Visibility = Visibility.Hidden;
+            txtbFichierEnCours.Text = "";
+            txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
+
+            nIcon.Text = this.Title;
+            nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            nIcon.Click += new EventHandler(nIcon_Click);
+
+            /* gestion TooTip => désactivée pour le moment
+            nIcon.BalloonTipTitle = this.Title;
+            nIcon.BalloonTipClicked += new EventHandler(balloonTip_Clicked);
+            nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
+
+            messageTimer.Tick += new EventHandler(messageTimer_Tick);
+            messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
+            */
+
+            timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
+            timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
         }
 
 	#endregion
