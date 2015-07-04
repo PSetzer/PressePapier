@@ -32,6 +32,7 @@ namespace PressePapier
         private const int addLineHeight = 17;
         private const int maxTbHeight = 208;
         private double maxSvHeight = 0;
+        private bool isAppActive = true;
         GestionFichier gestionFichier = new GestionFichier();
         
         System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
@@ -186,11 +187,15 @@ namespace PressePapier
                 else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && rbCtrl.IsChecked == true ||
                          hotKey.KeyModifiers.Equals(KeyModifier.Alt) && rbAlt.IsChecked == true)
                 {
-                    //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
-                    //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
-                    while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
+
+                    if (!isAppActive)
                     {
-                        Thread.Sleep(100);
+                        //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
+                        //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
+                        while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
+                        {
+                            Thread.Sleep(100);
+                        }
                     }
 
                     switch (hotKey.Key)
@@ -610,6 +615,16 @@ namespace PressePapier
             border1.Margin = new Thickness(0);
             border1.Width = e.NewSize.Width;
             border1.Height = e.NewSize.Height;
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            isAppActive = true;
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            isAppActive = false;
         }
     #endregion
 
