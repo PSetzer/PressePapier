@@ -186,15 +186,12 @@ namespace PressePapier
         {
             try
             {
-                if (pathFichier != "")
+                if (File.Exists(pathFichierConfig))
                 {
-                    if (File.Exists(pathFichierConfig))
-                    {
-                        XDocument fichierConfig = XDocument.Load(pathFichierConfig);
-                        fichierConfig.Element("Racine").Element("DernierFichier").SetValue(pathFichier);
-                        fichierConfig.Save(pathFichierConfig);
-                    }
-                }
+                    XDocument fichierConfig = XDocument.Load(pathFichierConfig);
+                    fichierConfig.Element("Racine").Element("DernierFichier").SetValue(pathFichier);
+                    fichierConfig.Save(pathFichierConfig);
+                }   
             }
             catch (Exception ex)
             {

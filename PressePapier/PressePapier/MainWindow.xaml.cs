@@ -67,12 +67,9 @@ namespace PressePapier
 
                 rbCtrl.IsChecked = true;
 
-                lblFichierEnCours.Content = "";
-
                 gestionFichier.VerifPresenceFichierConfig();
 
                 GestionChargementFichier(gestionFichier.DernierFichierOuvert);
-
 
                 nIcon.Text = this.Title;
                 nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
@@ -451,14 +448,10 @@ namespace PressePapier
             try
             {
                 string pathFichier = GetPathFichier();
-                
-                if (pathFichier != "")
-                {
-                    Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
-                    SetTextes(textes);
-                    lblFichierEnCours.Content = GetNomFichier(pathFichier);
-                    gestionFichier.MajFichierOuvert(pathFichier);
-                }
+                Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
+                SetTextes(textes);
+                lblFichierEnCours.Content = GetNomFichier(pathFichier);
+                gestionFichier.MajFichierOuvert(pathFichier);
             }
             catch (Exception)
             {
@@ -472,14 +465,10 @@ namespace PressePapier
             try
             {
                 string pathFichier = GetPathFichier();
-
-                if (pathFichier != "")
-                {
-                    Dictionary<string, string> textes = GetTextes();
-                    gestionFichier.SauvegardeFichier(textes, pathFichier);
-                    lblFichierEnCours.Content = GetNomFichier(pathFichier);
-                    gestionFichier.MajFichierOuvert(pathFichier);
-                }
+                Dictionary<string, string> textes = GetTextes();
+                gestionFichier.SauvegardeFichier(textes, pathFichier);
+                lblFichierEnCours.Content = GetNomFichier(pathFichier);
+                gestionFichier.MajFichierOuvert(pathFichier);
             }
             catch (Exception)
             {
@@ -492,10 +481,14 @@ namespace PressePapier
         {
             try
             {
-                string nomFichierAvecExt = pathFichier.Split('\\').Last<string>();
-                string extension = nomFichierAvecExt.Split('.').Last<string>();
-                var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile<string>(item => item != extension);
-                return elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
+                if (pathFichier != "")
+                {
+                    string nomFichierAvecExt = pathFichier.Split('\\').Last<string>();
+                    string extension = nomFichierAvecExt.Split('.').Last<string>();
+                    var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile<string>(item => item != extension);
+                    return elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
+                }
+                else return "";
             }
             catch (Exception)
             {
