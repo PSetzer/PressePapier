@@ -17,13 +17,14 @@ using System.Data;
 using System.Threading;
 using WindowsInput;
 using Microsoft.Win32;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace PressePapier
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
     #region initialisation
         List<Key> lstKeys = new List<Key>();
@@ -35,7 +36,6 @@ namespace PressePapier
         private bool isAppActive = true;
         GestionFichier gestionFichier = new GestionFichier();
         
-        System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
         /* gestion TooTip => désactivée pour le moment
         public delegate void MouseEventHandler(object sender, System.Windows.Forms.MouseEventArgs e);
         System.Windows.Threading.DispatcherTimer messageTimer = new System.Windows.Threading.DispatcherTimer();
@@ -91,9 +91,8 @@ namespace PressePapier
             txtbFichierEnCours.Text = "";
             txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
-            nIcon.Text = this.Title;
-            nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
-            nIcon.Click += new EventHandler(nIcon_Click);
+            tbiIcon.ToolTipText = this.Title;
+            tbiIcon.TrayLeftMouseUp += new System.Windows.RoutedEventHandler(tbiIcon_TrayClick);
 
             /* gestion TooTip => désactivée pour le moment
             nIcon.BalloonTipTitle = this.Title;
@@ -178,7 +177,7 @@ namespace PressePapier
                                 }
                         }
 
-                        nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+                        tbiIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
                         this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
                         timerNotifCopy.Stop();
                         timerNotifCopy.Start();
@@ -629,12 +628,12 @@ namespace PressePapier
     #endregion
 
     #region gestion NotifyIcon
-        
-        private void nIcon_Click(object sender, EventArgs e)
+
+        private void tbiIcon_TrayClick(object sender, RoutedEventArgs e)
         {
             this.Show();
             this.WindowState = WindowState.Normal;
-            nIcon.Visible = false;
+            tbiIcon.Visibility = Visibility.Collapsed;
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -642,8 +641,13 @@ namespace PressePapier
             if (this.WindowState == WindowState.Minimized)
             {
                 this.Hide();
-                nIcon.Visible = true;
+                tbiIcon.Visibility = Visibility.Visible;
             }
+        }
+
+        void IDisposable.Dispose()
+        {
+            tbiIcon.Dispose();
         }
 
     #region gestion TooTip => désactivée pour le moment
@@ -699,7 +703,7 @@ namespace PressePapier
 
         private void timerNotifCopy_Tick(object sender, EventArgs e)
         {
-            nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            tbiIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
             this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             timerNotifCopy.Stop();
         }
