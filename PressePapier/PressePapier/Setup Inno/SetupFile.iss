@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PressePapier"
-#define MyAppVersion "2.1"
+#define MyAppVersion "2.2"
 #define MyAppPublisher "P. Setzer"
 #define MyAppExeName "PressePapier.exe"
 
@@ -23,6 +23,7 @@ OutputBaseFilename=PressePapierSetup
 SetupIconFile=C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\ClipBoard.ico
 Compression=lzma
 SolidCompression=yes
+PrivilegesRequired=admin
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -30,6 +31,7 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
+Name: "launchAtStartup"; Description: "Lancer {#MyAppName} au démarrage de Windows"; GroupDescription: "Options :";
 
 [Files]
 Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\bin\Release\PressePapier.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -43,4 +45,5 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
-
+[Registry]
+Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "{#MyAppName}"; ValueData: "{app}\{#MyAppExeName}"; Tasks:launchAtStartup; Flags: uninsdeletevalue; 
