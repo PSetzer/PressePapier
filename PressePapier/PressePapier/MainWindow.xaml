@@ -78,8 +78,10 @@
             </Grid>
         </ScrollViewer>
         <TextBlock Name="txtbFichierEnCours" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="" ToolTipOpening="txtbFichierEnCours_ToolTipOpening">lblFichierEnCours</TextBlock>
-        <Label x:Name="lblNotifEnreg" Content="Enregistrement effectué" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="155" FontFamily="Trebuchet MS" FontSize="13" Visibility="Hidden"/>
-        <tb:TaskbarIcon Name="tbiIcon" IconSource="/Clipboard.ico"  Visibility="Collapsed" TrayLeftMouseUp="tbiIcon_TrayClick" MouseEnter="tbiIcon_MouseEnter" MouseLeave="tbiIcon_MouseLeave" MouseRightButtonUp="tbiIcon_TrayLeftMouseDown"/>
+        <Label x:Name="lblNotifEnreg" Content="Enregistrement effectué" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="155" FontFamily="Trebuchet MS" FontSize="13"/>
+        <tb:TaskbarIcon Name="tbiIcon"
+                  IconSource="/Clipboard.ico"
+                    Visibility="Collapsed"/>
     </Grid>
     
 </Window>
