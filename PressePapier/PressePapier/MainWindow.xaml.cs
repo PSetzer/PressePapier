@@ -25,7 +25,7 @@ namespace PressePapier
     /// </summary>
     public partial class MainWindow : Window
     {
-    #region initialisation
+        #region initialisation
         List<Key> lstKeys = new List<Key>();
         List<HotKey> lstHotKeys = new List<HotKey>();
         private const int initialLineHeight = 20;
@@ -34,13 +34,13 @@ namespace PressePapier
         private double maxSvHeight = 0;
         private bool isAppActive = true;
         GestionFichier gestionFichier = new GestionFichier();
-        
+
         System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
-        /* gestion TooTip => désactivée pour le moment
+        /* gestion TooTip*/
         public delegate void MouseEventHandler(object sender, System.Windows.Forms.MouseEventArgs e);
         System.Windows.Threading.DispatcherTimer messageTimer = new System.Windows.Threading.DispatcherTimer();
         private bool blnShowTooltip = true;
-        */
+
         System.Windows.Threading.DispatcherTimer timerNotifEnreg = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer timerNotifCopy = new System.Windows.Threading.DispatcherTimer();
 
@@ -61,7 +61,7 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -92,22 +92,20 @@ namespace PressePapier
             this.Width = stackPanel1.Margin.Left + stackPanel1.Width + 40;
             this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
-            
+
             rbCtrl.IsChecked = true;
             txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
-            nIcon.Text = this.Title;
             nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
             nIcon.Click += new EventHandler(nIcon_Click);
 
-            /* gestion TooTip => désactivée pour le moment
+            /* gestion TooTip*/
             nIcon.BalloonTipTitle = this.Title;
             nIcon.BalloonTipClicked += new EventHandler(balloonTip_Clicked);
             nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
 
             messageTimer.Tick += new EventHandler(messageTimer_Tick);
             messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
-            */
 
             timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
             timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
@@ -115,9 +113,9 @@ namespace PressePapier
             timerNotifCopy.Interval = new TimeSpan(0, 0, 0, 1, 0);
         }
 
-	#endregion
+        #endregion
 
-	#region actions touches de raccourci
+        #region actions touches de raccourci
         void OnHotKeyHandler(HotKey hotKey)
         {
             try
@@ -262,7 +260,7 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -298,11 +296,11 @@ namespace PressePapier
 
             return contenu;
         }
-	#endregion
+        #endregion
 
-    #region gestion boutons
+        #region gestion boutons
 
-    #region évènements RadioButtons
+        #region évènements RadioButtons
         //possibilité de transférer les traitements dans un objet à part
         private void rbCtrl_Checked(object sender, RoutedEventArgs e)
         {
@@ -367,8 +365,8 @@ namespace PressePapier
             }
         }
         #endregion
-        
-    #region évènements boutons menu
+
+        #region évènements boutons menu
         private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -383,7 +381,7 @@ namespace PressePapier
                 {
                     GestionEnregFichier(gestionFichier.ChoixFichierAEnregistrer);
                 }
-                
+
             }
             catch (Exception)
             {
@@ -426,13 +424,13 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
-    #endregion
+        #endregion
 
-    #region méthodes
+        #region méthodes
         private void GestionChargementFichier(Func<string> GetPathFichier)
         {
             try
@@ -440,7 +438,7 @@ namespace PressePapier
                 string pathFichier = GetPathFichier();
 
                 if(pathFichier != "")
-                { 
+                {
                     Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
                     SetTextes(textes);
                     txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
@@ -449,7 +447,7 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
@@ -530,11 +528,11 @@ namespace PressePapier
             }
             else e.Handled = true;
         }
-	#endregion
+        #endregion
 
-    #endregion
+        #endregion
 
-	#region gestion taille TextBox
+        #region gestion taille TextBox
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -580,7 +578,7 @@ namespace PressePapier
                     if (spMove.Margin.Top > spChanged.Margin.Top)
                     {
                         spMove.Margin = new Thickness(spMove.Margin.Left, spMove.Margin.Top + diffTbHeight, spMove.Margin.Right, spMove.Margin.Bottom);
-                    }   
+                    }
                 }
 
                 foreach (Label lblMove in grdTextBox.Children.OfType<Label>())
@@ -593,13 +591,13 @@ namespace PressePapier
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }
-	#endregion
-        
-    #region gestion Fenêtre
+        #endregion
+
+        #region gestion Fenêtre
         private void btnMinimiser_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -631,9 +629,9 @@ namespace PressePapier
         {
             isAppActive = false;
         }
-    #endregion
+        #endregion
 
-    #region gestion NotifyIcon
+        #region gestion NotifyIcon
 
         private void nIcon_Click(object sender, EventArgs e)
         {
@@ -648,11 +646,11 @@ namespace PressePapier
             {
                 this.Hide();
                 nIcon.Visible = true;
-        }
+            }
         }
 
-    #region gestion TooTip => désactivée pour le moment
-        /*
+        #region gestion TooTip
+
         private void nIcon_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             if (blnShowTooltip)
@@ -684,18 +682,18 @@ namespace PressePapier
             blnShowTooltip = false;
             messageTimer.Start();
         }
-        */
-    #endregion
-    #endregion
 
-    #region gestion Timers
-        /* gestion TooTip => désactivée pour le moment
+        #endregion
+        #endregion
+
+        #region gestion Timers
+        /* gestion TooTip*/
         private void messageTimer_Tick(object sender, EventArgs e)
         {
             blnShowTooltip = true;
             messageTimer.Stop();
         }
-        */
+
         private void timerNotifEnreg_Tick(object sender, EventArgs e)
         {
             lblNotifEnreg.Visibility = Visibility.Hidden;
@@ -708,6 +706,6 @@ namespace PressePapier
             this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             timerNotifCopy.Stop();
         }
-    #endregion
+        #endregion
     }
 }
