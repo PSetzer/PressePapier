@@ -29,14 +29,11 @@ namespace PressePapier
     #region initialisation
         List<Key> lstKeys = new List<Key>();
         List<HotKey> lstHotKeys = new List<HotKey>();
-
         private const int initialLineHeight = 20;
         private const int addLineHeight = 17;
         private const int maxTbHeight = 208;
         private double maxSvHeight = 0;
-
         private bool isAppActive = true;
-
         GestionFichier gestionFichier = new GestionFichier();
         
         /* gestion TooTip => désactivée pour le moment
@@ -44,8 +41,6 @@ namespace PressePapier
         System.Windows.Threading.DispatcherTimer messageTimer = new System.Windows.Threading.DispatcherTimer();
         private bool blnShowTooltip = true;
         */
-
-        System.Windows.Threading.DispatcherTimer timerShowBalloon = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer timerNotifEnreg = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer timerNotifCopy = new System.Windows.Threading.DispatcherTimer();
 
@@ -107,8 +102,6 @@ namespace PressePapier
             messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
             */
 
-            timerShowBalloon.Tick += new EventHandler(timerShowBalloon_Tick);
-            timerShowBalloon.Interval = new TimeSpan(0, 0, 0, 2, 0);
             timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
             timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
             timerNotifCopy.Tick += new EventHandler(timerNotifCopy_Tick);
@@ -701,12 +694,6 @@ namespace PressePapier
             messageTimer.Stop();
         }
         */
-        private void timerShowBalloon_Tick(object sender, EventArgs e)
-        {
-            tbiIcon.ShowCustomBalloon(txtbFichierEnCours, System.Windows.Controls.Primitives.PopupAnimation.Fade, 4000);
-            timerShowBalloon.Stop();
-        }
-
         private void timerNotifEnreg_Tick(object sender, EventArgs e)
         {
             lblNotifEnreg.Visibility = Visibility.Hidden;
@@ -720,20 +707,5 @@ namespace PressePapier
             timerNotifCopy.Stop();
         }
     #endregion
-
-        private void tbiIcon_MouseEnter(object sender, MouseEventArgs e)
-        {
-            timerShowBalloon.Start();
-        }
-
-        private void tbiIcon_MouseLeave(object sender, MouseEventArgs e)
-        {
-            timerShowBalloon.Stop();
-        }
-
-        private void tbiIcon_TrayLeftMouseDown(object sender, RoutedEventArgs e)
-        {
-            tbiIcon.ShowBalloonTip(this.Title, txtbFichierEnCours.Text, BalloonIcon.Info);
-        }
     }
 }
