@@ -672,10 +672,10 @@ namespace PressePapier
             foreach (KeyValuePair<string, string> text in textes)
             {
                 string numTextbox = text.Key.Substring(7);
-                tooltipText += numTextbox + " :\n" + text.Value;
-                if (text.Value != "")
+                string premiereLigne = text.Value.Split('\n')[0];
+                if (premiereLigne != "")
                 {
-                    tooltipText += "\n\n";
+                    tooltipText += numTextbox + " : " + premiereLigne + "\n";
                 }
             }
             nIcon.ShowBalloonTip(5000, this.Title, tooltipText, new System.Windows.Forms.ToolTipIcon());
