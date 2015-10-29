@@ -53,8 +53,9 @@ namespace PressePapier
         {
             try
             {
-                InitControles();
+                InitTextes();
                 InitKeys();
+                InitControles();
                 gestionFichier.VerifPresenceFichierConfig();
                 GestionChargementFichier(gestionFichier.DernierFichierOuvert);
             }
@@ -63,6 +64,12 @@ namespace PressePapier
                 
                 throw;
             }
+        }
+
+        private void InitTextes()
+        {
+            lblNotifEnreg.Visibility = Visibility.Hidden;
+            txtbFichierEnCours.Text = "";
         }
 
         private void InitKeys()
@@ -87,8 +94,6 @@ namespace PressePapier
             maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
             
             rbCtrl.IsChecked = true;
-            lblNotifEnreg.Visibility = Visibility.Hidden;
-            txtbFichierEnCours.Text = "";
             txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
             nIcon.Text = this.Title;
