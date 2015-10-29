@@ -15,7 +15,8 @@ namespace PressePapier
 	{
         OpenFileDialog openFileDialog1 = new OpenFileDialog();
         SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-        string pathFichierConfig = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\PressePapier\\config.xml";
+        string pathDossierConfig = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\PressePapier";
+        string pathFichierConfig = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\PressePapier\\config.xml";
 
     #region enregistrement
         public string ChoixFichierAEnregistrer()
@@ -159,9 +160,7 @@ namespace PressePapier
         public void VerifPresenceFichierConfig()
         {
             try
-            {
-                string pathDossierConfig = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\PressePapier";
-
+            {                
                 if(!Directory.Exists(pathDossierConfig))
                 {
                     Directory.CreateDirectory(pathDossierConfig);
