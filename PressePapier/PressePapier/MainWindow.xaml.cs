@@ -58,8 +58,8 @@ namespace PressePapier
         {
             try
             {
-                InitKeys();
                 InitControles();
+                InitKeys();
                 gestionFichier.VerifPresenceFichierConfig();
                 GestionChargementFichier(gestionFichier.DernierFichierOuvert);
             }
@@ -95,6 +95,8 @@ namespace PressePapier
 
             txtbFichierEnCours.Text = "";
             txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
+
+            lblNotifEnreg.Visibility = Visibility.Hidden;
 
             /* gestion TooTip => désactivée pour le moment
             nIcon.BalloonTipTitle = this.Title;
