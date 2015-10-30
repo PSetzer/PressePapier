@@ -53,11 +53,13 @@ namespace PressePapier
         {
             try
             {
+                this.WindowState = WindowState.Minimized;
                 InitTextes();
                 InitKeys();
                 InitControles();
                 gestionFichier.VerifPresenceFichierConfig();
                 GestionChargementFichier(gestionFichier.DernierFichierOuvert);
+                GestionDisplayTooltip();
             }
             catch (Exception)
             {
@@ -100,8 +102,7 @@ namespace PressePapier
             nIcon.Click += new EventHandler(nIcon_Click);
 
             /* gestion TooTip*/
-            nIcon.BalloonTipTitle = this.Title;
-            nIcon.BalloonTipClicked += new EventHandler(balloonTip_Clicked);
+            nIcon.BalloonTipClicked += new EventHandler(nIcon_Click);
             nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
 
             messageTimer.Tick += new EventHandler(messageTimer_Tick);
@@ -606,6 +607,7 @@ namespace PressePapier
         private void btnFermer_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            nIcon.Visible = false;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -628,6 +630,8 @@ namespace PressePapier
         private void Window_Deactivated(object sender, EventArgs e)
         {
             isAppActive = false;
+            this.Hide();
+            nIcon.Visible = true;
         }
         #endregion
 
@@ -636,6 +640,7 @@ namespace PressePapier
         private void nIcon_Click(object sender, EventArgs e)
         {
             this.Show();
+            this.Activate();
             this.WindowState = WindowState.Normal;
             nIcon.Visible = false;
         }
@@ -659,15 +664,20 @@ namespace PressePapier
             }
         }
 
-        private void balloonTip_Clicked(object sender, EventArgs e)
-        {
-            GestionDisplayTooltip();
-        }
-
         private void GestionDisplayTooltip()
         {
             Dictionary<string, string> textes = GetTextes();
             string tooltipText = "";
+            bool aucunTexte = true;
+
+            if (txtbFichierEnCours.Text != "")
+            {
+                tooltipText = txtbFichierEnCours.Text + "\n";
+                if (tooltipText.Length > 28)
+                {
+                    tooltipText = tooltipText.Substring(0, 25) + "...\n";
+                }
+            }
 
             foreach (KeyValuePair<string, string> text in textes)
             {
@@ -675,10 +685,21 @@ namespace PressePapier
                 string premiereLigne = text.Value.Split('\n')[0];
                 if (premiereLigne != "")
                 {
+                    aucunTexte = false;
+                    if (premiereLigne.Length > 24)
+                    {
+                        premiereLigne = premiereLigne.Substring(0, 21) + "...";
+                    }
                     tooltipText += numTextbox + " : " + premiereLigne + "\n";
                 }
             }
-            nIcon.ShowBalloonTip(5000, this.Title, tooltipText, new System.Windows.Forms.ToolTipIcon());
+
+            if (aucunTexte)
+            {
+                tooltipText += "Aucun texte";
+            }
+
+            nIcon.ShowBalloonTip(5000, this.Title, tooltipText, System.Windows.Forms.ToolTipIcon.None);
             blnShowTooltip = false;
             messageTimer.Start();
         }
