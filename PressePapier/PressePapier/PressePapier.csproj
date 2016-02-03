@@ -129,9 +129,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="ClipBoardActivity.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Setup Inno\PressePapierSetup.exe" />
     <Content Include="Setup Inno\SetupFile.iss" />
-    <Resource Include="ClipBoard.ico" />
+    <Resource Include="ClipBoard.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="InputSimulator.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
