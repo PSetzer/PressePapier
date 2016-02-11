@@ -16,12 +16,12 @@ namespace PressePapier
             {
                 if (pathFichier != "")
                 {
-                    string nomFichierAvecExt = pathFichier.Split('\\').Last<string>();
+                    string nomFichierAvecExt = pathFichier.Split('\\').Last();
                     if (nomFichierAvecExt.Split('.').Length > 1)
                     {
-                        string extension = nomFichierAvecExt.Split('.').Last<string>();
-                        var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile<string>(item => item != extension);
-                        nomFichier = elemsNomFichier.Aggregate<string>((item, next) => item + "." + next);
+                        string extension = nomFichierAvecExt.Split('.').Last();
+                        var elemsNomFichier = nomFichierAvecExt.Split('.').TakeWhile(item => item != extension);
+                        nomFichier = elemsNomFichier.Aggregate((item, next) => item + "." + next);
                     }
                     else
                     {
