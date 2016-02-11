@@ -26,7 +26,7 @@ namespace PressePapier
     public partial class MainWindow : Window
     {
         #region initialisation
-        List<Key> lstKeys = new List<Key>();
+        Dictionary<Key, string> dicKeysTB = new Dictionary<Key, string>();
         List<HotKey> lstHotKeys = new List<HotKey>();
         private const int initialLineHeight = 20;
         private const int addLineHeight = 17;
@@ -55,7 +55,7 @@ namespace PressePapier
             {
                 this.WindowState = WindowState.Minimized;
                 InitTextes();
-                InitKeys();
+                InitDicKeysTB();
                 InitControles();
                 gestionFichier.VerifPresenceFichierConfig();
                 GestionChargementFichier(gestionFichier.DernierFichierOuvert);
@@ -74,18 +74,18 @@ namespace PressePapier
             txtbFichierEnCours.Text = "";
         }
 
-        private void InitKeys()
+        private void InitDicKeysTB()
         {
-            lstKeys.Add(Key.D1);
-            lstKeys.Add(Key.D2);
-            lstKeys.Add(Key.D3);
-            lstKeys.Add(Key.D4);
-            lstKeys.Add(Key.D5);
-            lstKeys.Add(Key.D6);
-            lstKeys.Add(Key.D7);
-            lstKeys.Add(Key.D8);
-            lstKeys.Add(Key.D9);
-            lstKeys.Add(Key.D0);
+            dicKeysTB.Add(Key.D1, textBox1.Name);
+            dicKeysTB.Add(Key.D2, textBox2.Name);
+            dicKeysTB.Add(Key.D3, textBox3.Name);
+            dicKeysTB.Add(Key.D4, textBox4.Name);
+            dicKeysTB.Add(Key.D5, textBox5.Name);
+            dicKeysTB.Add(Key.D6, textBox6.Name);
+            dicKeysTB.Add(Key.D7, textBox7.Name);
+            dicKeysTB.Add(Key.D8, textBox8.Name);
+            dicKeysTB.Add(Key.D9, textBox9.Name);
+            dicKeysTB.Add(Key.D0, textBox10.Name);
         }
 
         private void InitControles()
@@ -128,58 +128,14 @@ namespace PressePapier
 
                     if (contenu != "")
                     {
-                        switch (hotKey.Key)
+                        foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
                         {
-                            case (Key.D1):
-                                {
-                                    textBox1.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D2):
-                                {
-                                    textBox2.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D3):
-                                {
-                                    textBox3.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D4):
-                                {
-                                    textBox4.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D5):
-                                {
-                                    textBox5.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D6):
-                                {
-                                    textBox6.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D7):
-                                {
-                                    textBox7.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D8):
-                                {
-                                    textBox8.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D9):
-                                {
-                                    textBox9.Text = contenu;
-                                    break;
-                                }
-                            case (Key.D0):
-                                {
-                                    textBox10.Text = contenu;
-                                    break;
-                                }
+                            TextBox tb = sp.Children[0] as TextBox;
+                            if (dicKeysTB[hotKey.Key] == tb.Name)
+                            {
+                                tb.Text = contenu;
+                                break;
+                            }
                         }
 
                         nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
@@ -202,58 +158,14 @@ namespace PressePapier
                         }
                     }
 
-                    switch (hotKey.Key)
+                    foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
                     {
-                        case (Key.D1):
-                            {
-                                Clipboard.SetDataObject(textBox1.Text);
-                                break;
-                            }
-                        case (Key.D2):
-                            {
-                                Clipboard.SetDataObject(textBox2.Text);
-                                break;
-                            }
-                        case (Key.D3):
-                            {
-                                Clipboard.SetDataObject(textBox3.Text);
-                                break;
-                            }
-                        case (Key.D4):
-                            {
-                                Clipboard.SetDataObject(textBox4.Text);
-                                break;
-                            }
-                        case (Key.D5):
-                            {
-                                Clipboard.SetDataObject(textBox5.Text);
-                                break;
-                            }
-                        case (Key.D6):
-                            {
-                                Clipboard.SetDataObject(textBox6.Text);
-                                break;
-                            }
-                        case (Key.D7):
-                            {
-                                Clipboard.SetDataObject(textBox7.Text);
-                                break;
-                            }
-                        case (Key.D8):
-                            {
-                                Clipboard.SetDataObject(textBox8.Text);
-                                break;
-                            }
-                        case (Key.D9):
-                            {
-                                Clipboard.SetDataObject(textBox9.Text);
-                                break;
-                            }
-                        case (Key.D0):
-                            {
-                                Clipboard.SetDataObject(textBox10.Text);
-                                break;
-                            }
+                        TextBox tb = sp.Children[0] as TextBox;
+                        if (dicKeysTB[hotKey.Key] == tb.Name)
+                        {
+                            Clipboard.SetDataObject(tb.Text);
+                            break;
+                        }
                     }
 
                     InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
@@ -308,10 +220,10 @@ namespace PressePapier
             try
             {
                 // touches de collage vers un éditeur de texte
-                foreach (Key key in lstKeys)
+                foreach (var keyTB in dicKeysTB)
                 {
-                    lstHotKeys.Add(new HotKey(key, KeyModifier.Ctrl, OnHotKeyHandler));
-                    lstHotKeys.Add(new HotKey(key, KeyModifier.Ctrl | KeyModifier.Shift, OnHotKeyHandler));
+                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Ctrl, OnHotKeyHandler));
+                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Ctrl | KeyModifier.Shift, OnHotKeyHandler));
                 }
             }
             catch (Exception)
@@ -331,10 +243,10 @@ namespace PressePapier
             try
             {
                 // touches de collage vers un éditeur de texte
-                foreach (Key key in lstKeys)
+                foreach (var keyTB in dicKeysTB)
                 {
-                    lstHotKeys.Add(new HotKey(key, KeyModifier.Alt, OnHotKeyHandler));
-                    lstHotKeys.Add(new HotKey(key, KeyModifier.Alt | KeyModifier.Shift, OnHotKeyHandler));
+                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Alt, OnHotKeyHandler));
+                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Alt | KeyModifier.Shift, OnHotKeyHandler));
                 }
             }
             catch (Exception)
