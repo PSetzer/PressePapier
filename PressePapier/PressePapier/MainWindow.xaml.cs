@@ -679,7 +679,7 @@ namespace PressePapier
                 }
             }
 
-            foreach (KeyValuePair<string, string> text in textes)
+            foreach (var text in textes)
             {
                 string numTextbox = text.Key.Substring(7);
                 string premiereLigne = text.Value.Split('\n')[0];

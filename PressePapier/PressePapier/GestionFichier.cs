@@ -54,7 +54,7 @@ namespace PressePapier
                                                 new XElement("Racine",
                                                     new XElement("Textes")));
 
-                    foreach (KeyValuePair<string, string> text in textes)
+                    foreach (var text in textes)
                     {
                         document.Element("Racine").Element("Textes").Add(new XElement(text.Key, text.Value));
                     }
@@ -139,7 +139,7 @@ namespace PressePapier
                     var requete = from d in sauvegardeXML.Root.Descendants("Textes")
                                   select d.Descendants();
 
-                    foreach (IEnumerable<XElement> node in requete)
+                    foreach (var node in requete)
                     {
                         foreach (XElement element in node)
                         {
