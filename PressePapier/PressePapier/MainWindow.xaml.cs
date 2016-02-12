@@ -200,7 +200,7 @@ namespace PressePapier
             try
             {
                 // touches de collage vers un éditeur de texte
-                KeyModifier keyModifier = new KeyModifier();
+                KeyModifier keyModifier;
                 if ((RadioButton)sender == rbCtrl) keyModifier = KeyModifier.Ctrl;
                 else keyModifier = KeyModifier.Alt;
 
@@ -291,8 +291,8 @@ namespace PressePapier
             {
                 if (pathFichier != "")
                 {
-                    Dictionary<string, string> textes = GetTextes();
-                    gestionFichier.SauvegardeFichier(textes, pathFichier);
+                    gestionFichier.SauvegardeFichier(GetTextes(), pathFichier);
+
                     txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
                     gestionFichier.SetDernierFichierOuvert(pathFichier);
 
@@ -314,8 +314,8 @@ namespace PressePapier
             {
                 if(pathFichier != "")
                 {
-                    Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
-                    SetTextes(textes);
+                    SetTextes(gestionFichier.ChargementFichier(pathFichier));
+
                     txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
                     gestionFichier.SetDernierFichierOuvert(pathFichier);
                 }
@@ -329,7 +329,7 @@ namespace PressePapier
 
         private Dictionary<string, string> GetTextes()
         {
-            Dictionary<string, string> textes = new Dictionary<string, string>();
+            var textes = new Dictionary<string, string>();
 
             try
             {
