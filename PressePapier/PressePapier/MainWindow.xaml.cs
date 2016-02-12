@@ -57,8 +57,7 @@ namespace PressePapier
                 InitTextes();
                 InitDicKeysTB();
                 InitControles();
-                gestionFichier.VerifPresenceFichierConfig();
-                GestionChargementFichier(gestionFichier.DernierFichierOuvert);
+                GestionChargementFichier(gestionFichier.GetDernierFichierOuvert);
                 GestionDisplayTooltip();
             }
             catch (Exception)
@@ -288,7 +287,7 @@ namespace PressePapier
 
                 if (enregBtnPressed.Equals(btnEnregistrer))
                 {
-                    GestionEnregFichier(gestionFichier.DernierFichierOuvert);
+                    GestionEnregFichier(gestionFichier.GetDernierFichierOuvert);
                 }
                 else if (enregBtnPressed.Equals(btnEnregSous))
                 {
@@ -315,7 +314,7 @@ namespace PressePapier
                 }
                 else if (chargerBtnPressed.Equals(btnRecharger))
                 {
-                    GestionChargementFichier(gestionFichier.DernierFichierOuvert);
+                    GestionChargementFichier(gestionFichier.GetDernierFichierOuvert);
                 }
             }
             catch (Exception)
@@ -355,7 +354,7 @@ namespace PressePapier
                     Dictionary<string, string> textes = gestionFichier.ChargementFichier(pathFichier);
                     SetTextes(textes);
                     txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
-                    gestionFichier.MajFichierOuvert(pathFichier);
+                    gestionFichier.SetDernierFichierOuvert(pathFichier);
                 }
             }
             catch (Exception)
@@ -376,7 +375,7 @@ namespace PressePapier
                     Dictionary<string, string> textes = GetTextes();
                     gestionFichier.SauvegardeFichier(textes, pathFichier);
                     txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
-                    gestionFichier.MajFichierOuvert(pathFichier);
+                    gestionFichier.SetDernierFichierOuvert(pathFichier);
                     lblNotifEnreg.Visibility = Visibility.Visible;
                     timerNotifEnreg.Stop();
                     timerNotifEnreg.Start();

@@ -70,26 +70,6 @@ namespace PressePapier
     #endregion
 
     #region chargement
-        public string DernierFichierOuvert()
-        {
-            string pathFichier = "";
-
-            try
-            {
-                if (File.Exists(pathFichierConfig))
-                {
-                    XDocument fichierConfig = XDocument.Load(pathFichierConfig);
-                    pathFichier = fichierConfig.Element("Racine").Element("DernierFichier").Value;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Erreur lors de la récupération du dernier fichier ouvert.");
-            }
-
-            return pathFichier;
-        }
-
         public string ChoixFichierACharger()
 		{
 			string pathFichier = "";
@@ -157,7 +137,7 @@ namespace PressePapier
         }
     #endregion
 
-        public void VerifPresenceFichierConfig()
+        private void CreateFichierConfigIfNotExists()
         {
             try
             {                
@@ -180,17 +160,35 @@ namespace PressePapier
                 MessageBox.Show(ex.Message, "Erreur lors de l'écriture du fichier");
             }
         }
-        
-        public void MajFichierOuvert(string pathFichier)
+
+        public string GetDernierFichierOuvert()
         {
+            string pathFichier = "";
+
             try
             {
                 if (File.Exists(pathFichierConfig))
                 {
                     XDocument fichierConfig = XDocument.Load(pathFichierConfig);
-                    fichierConfig.Element("Racine").Element("DernierFichier").SetValue(pathFichier);
-                    fichierConfig.Save(pathFichierConfig);
-                }   
+                    pathFichier = fichierConfig.Element("Racine").Element("DernierFichier").Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur lors de la récupération du dernier fichier ouvert.");
+            }
+
+            return pathFichier;
+        }
+
+        public void SetDernierFichierOuvert(string pathFichier)
+        {
+            try
+            {
+                CreateFichierConfigIfNotExists();
+                XDocument fichierConfig = XDocument.Load(pathFichierConfig);
+                fichierConfig.Element("Racine").Element("DernierFichier").SetValue(pathFichier);
+                fichierConfig.Save(pathFichierConfig);
             }
             catch (Exception ex)
             {
