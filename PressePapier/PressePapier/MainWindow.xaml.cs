@@ -26,7 +26,7 @@ namespace PressePapier
     public partial class MainWindow : Window
     {
         #region initialisation
-        Dictionary<Key, string> dicKeysTB = new Dictionary<Key, string>();
+        Dictionary<Key, TextBox> dicKeysTB = new Dictionary<Key, TextBox>();
         List<HotKey> lstHotKeys = new List<HotKey>();
         private const int initialLineHeight = 20;
         private const int addLineHeight = 17;
@@ -75,16 +75,16 @@ namespace PressePapier
 
         private void InitDicKeysTB()
         {
-            dicKeysTB.Add(Key.D1, textBox1.Name);
-            dicKeysTB.Add(Key.D2, textBox2.Name);
-            dicKeysTB.Add(Key.D3, textBox3.Name);
-            dicKeysTB.Add(Key.D4, textBox4.Name);
-            dicKeysTB.Add(Key.D5, textBox5.Name);
-            dicKeysTB.Add(Key.D6, textBox6.Name);
-            dicKeysTB.Add(Key.D7, textBox7.Name);
-            dicKeysTB.Add(Key.D8, textBox8.Name);
-            dicKeysTB.Add(Key.D9, textBox9.Name);
-            dicKeysTB.Add(Key.D0, textBox10.Name);
+            dicKeysTB.Add(Key.D1, textBox1);
+            dicKeysTB.Add(Key.D2, textBox2);
+            dicKeysTB.Add(Key.D3, textBox3);
+            dicKeysTB.Add(Key.D4, textBox4);
+            dicKeysTB.Add(Key.D5, textBox5);
+            dicKeysTB.Add(Key.D6, textBox6);
+            dicKeysTB.Add(Key.D7, textBox7);
+            dicKeysTB.Add(Key.D8, textBox8);
+            dicKeysTB.Add(Key.D9, textBox9);
+            dicKeysTB.Add(Key.D0, textBox10);
         }
 
         private void InitControles()
@@ -127,15 +127,7 @@ namespace PressePapier
 
                     if (contenu != "")
                     {
-                        foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
-                        {
-                            TextBox tb = sp.Children[0] as TextBox;
-                            if (dicKeysTB[hotKey.Key] == tb.Name)
-                            {
-                                tb.Text = contenu;
-                                break;
-                            }
-                        }
+                        dicKeysTB[hotKey.Key].Text = contenu;
 
                         nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
                         this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
@@ -146,7 +138,6 @@ namespace PressePapier
                 else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && rbCtrl.IsChecked == true ||
                          hotKey.KeyModifiers.Equals(KeyModifier.Alt) && rbAlt.IsChecked == true)
                 {
-
                     if (!isAppActive)
                     {
                         //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
@@ -157,15 +148,7 @@ namespace PressePapier
                         }
                     }
 
-                    foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
-                    {
-                        TextBox tb = sp.Children[0] as TextBox;
-                        if (dicKeysTB[hotKey.Key] == tb.Name)
-                        {
-                            Clipboard.SetDataObject(tb.Text);
-                            break;
-                        }
-                    }
+                    Clipboard.SetDataObject(dicKeysTB[hotKey.Key].Text);
 
                     InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
                 }
@@ -293,11 +276,7 @@ namespace PressePapier
         {
             try
             {
-                foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
-                {
-                    TextBox tb = sp.Children[0] as TextBox;
-                    tb.Clear();
-                }
+                foreach (TextBox tb in dicKeysTB.Values) tb.Clear();
             }
             catch (Exception)
             {
@@ -354,9 +333,8 @@ namespace PressePapier
 
             try
             {
-                foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
+                foreach (TextBox tb in dicKeysTB.Values)
                 {
-                    TextBox tb = sp.Children[0] as TextBox;
                     textes.Add(tb.Name, tb.Text);
                 }
             }
@@ -376,9 +354,8 @@ namespace PressePapier
                 if (textes.Count > 0)
                 {
                     string texteAInserer;
-                    foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
+                    foreach (TextBox tb in dicKeysTB.Values)
                     {
-                        TextBox tb = sp.Children[0] as TextBox;
                         textes.TryGetValue(tb.Name, out texteAInserer);
                         tb.Text = texteAInserer;
                     }
