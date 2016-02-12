@@ -214,15 +214,19 @@ namespace PressePapier
 
         #region évènements RadioButtons
         //possibilité de transférer les traitements dans un objet à part
-        private void rbCtrl_Checked(object sender, RoutedEventArgs e)
+        private void RegisterKeys(object sender, RoutedEventArgs e)
         {
             try
             {
                 // touches de collage vers un éditeur de texte
+                KeyModifier keyModifier = new KeyModifier();
+                if ((RadioButton)sender == rbCtrl) keyModifier = KeyModifier.Ctrl;
+                else keyModifier = KeyModifier.Alt;
+
                 foreach (var keyTB in dicKeysTB)
                 {
-                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Ctrl, OnHotKeyHandler));
-                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Ctrl | KeyModifier.Shift, OnHotKeyHandler));
+                    lstHotKeys.Add(new HotKey(keyTB.Key, keyModifier, OnHotKeyHandler));
+                    lstHotKeys.Add(new HotKey(keyTB.Key, keyModifier | KeyModifier.Shift, OnHotKeyHandler));
                 }
             }
             catch (Exception)
@@ -232,35 +236,7 @@ namespace PressePapier
             }
         }
 
-        private void rbCtrl_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UnregisterList();
-        }
-
-        private void rbAlt_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // touches de collage vers un éditeur de texte
-                foreach (var keyTB in dicKeysTB)
-                {
-                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Alt, OnHotKeyHandler));
-                    lstHotKeys.Add(new HotKey(keyTB.Key, KeyModifier.Alt | KeyModifier.Shift, OnHotKeyHandler));
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        private void rbAlt_Unchecked(object sender, RoutedEventArgs e)
-        {
-            UnregisterList();
-        }
-
-        private void UnregisterList()
+        private void UnregisterKeys(object sender, RoutedEventArgs e)
         {
             try
             {
