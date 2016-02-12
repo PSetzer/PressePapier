@@ -30,10 +30,9 @@ namespace PressePapier
                     
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new Exception("Le nom du fichier n'a pas pu être récupéré :\n", ex);
             }
 
             return nomFichier;

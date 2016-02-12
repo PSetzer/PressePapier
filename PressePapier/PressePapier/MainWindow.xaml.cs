@@ -51,20 +51,12 @@ namespace PressePapier
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                this.WindowState = WindowState.Minimized;
-                InitTextes();
-                InitDicKeysTB();
-                InitControles();
-                GestionChargementFichier(gestionFichier.GetDernierFichierOuvert());
-                GestionDisplayTooltip();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            this.WindowState = WindowState.Minimized;
+            InitTextes();
+            InitDicKeysTB();
+            InitControles();
+            GestionChargementFichier(gestionFichier.GetDernierFichierOuvert());
+            GestionDisplayTooltip();            
         }
 
         private void InitTextes()
@@ -118,45 +110,37 @@ namespace PressePapier
         #region actions touches de raccourci
         void OnHotKeyHandler(HotKey hotKey)
         {
-            try
+            if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl | KeyModifier.Shift) && rbCtrl.IsChecked == true ||
+                hotKey.KeyModifiers.Equals(KeyModifier.Alt | KeyModifier.Shift) && rbAlt.IsChecked == true)
             {
-                if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl | KeyModifier.Shift) && rbCtrl.IsChecked == true ||
-                    hotKey.KeyModifiers.Equals(KeyModifier.Alt | KeyModifier.Shift) && rbAlt.IsChecked == true)
+                string contenu = GetClipBoardText();
+
+                if (contenu != "")
                 {
-                    string contenu = GetClipBoardText();
+                    dicKeysTB[hotKey.Key].Text = contenu;
 
-                    if (contenu != "")
-                    {
-                        dicKeysTB[hotKey.Key].Text = contenu;
-
-                        nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
-                        this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
-                        timerNotifCopy.Stop();
-                        timerNotifCopy.Start();
-                    }
-                }
-                else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && rbCtrl.IsChecked == true ||
-                         hotKey.KeyModifiers.Equals(KeyModifier.Alt) && rbAlt.IsChecked == true)
-                {
-                    if (!isAppActive)
-                    {
-                        //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
-                        //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
-                        while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
-                        {
-                            Thread.Sleep(100);
-                        }
-                    }
-
-                    Clipboard.SetDataObject(dicKeysTB[hotKey.Key].Text);
-
-                    InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+                    nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+                    this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+                    timerNotifCopy.Stop();
+                    timerNotifCopy.Start();
                 }
             }
-            catch (Exception)
+            else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && rbCtrl.IsChecked == true ||
+                        hotKey.KeyModifiers.Equals(KeyModifier.Alt) && rbAlt.IsChecked == true)
             {
+                if (!isAppActive)
+                {
+                    //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
+                    //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
+                    while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
 
-                throw;
+                Clipboard.SetDataObject(dicKeysTB[hotKey.Key].Text);
+
+                InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
             }
         }
 
@@ -177,12 +161,12 @@ namespace PressePapier
                         contenu = (string)Clipboard.GetData(System.Windows.DataFormats.Text);
                         blnDone = true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         if (count > 50)
                         {
                             blnDone = true;
-                            MessageBox.Show("Le contenu du Presse Papier n'a pas pu être récupéré", "Erreur");
+                            throw new Exception("Le contenu du Presse Papier n'a pas pu être récupéré :\n", ex);
                         }
                         Thread.Sleep(100);
                     }
@@ -197,133 +181,77 @@ namespace PressePapier
         //possibilité de transférer les traitements dans un objet à part
         private void RegisterKeys(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                // touches de collage vers un éditeur de texte
-                KeyModifier keyModifier;
-                if ((RadioButton)sender == rbCtrl) keyModifier = KeyModifier.Ctrl;
-                else keyModifier = KeyModifier.Alt;
+            // touches de collage vers un éditeur de texte
+            KeyModifier keyModifier;
+            if ((RadioButton)sender == rbCtrl) keyModifier = KeyModifier.Ctrl;
+            else keyModifier = KeyModifier.Alt;
 
-                foreach (var keyTB in dicKeysTB)
-                {
-                    lstHotKeys.Add(new HotKey(keyTB.Key, keyModifier, OnHotKeyHandler));
-                    lstHotKeys.Add(new HotKey(keyTB.Key, keyModifier | KeyModifier.Shift, OnHotKeyHandler));
-                }
-            }
-            catch (Exception)
+            foreach (var keyTB in dicKeysTB)
             {
-
-                throw;
+                lstHotKeys.Add(new HotKey(keyTB.Key, keyModifier, OnHotKeyHandler));
+                lstHotKeys.Add(new HotKey(keyTB.Key, keyModifier | KeyModifier.Shift, OnHotKeyHandler));
             }
         }
 
         private void UnregisterKeys(object sender, RoutedEventArgs e)
         {
-            try
+            foreach (HotKey hotKey in lstHotKeys)
             {
-                foreach (HotKey hotKey in lstHotKeys)
-                {
-                    hotKey.Unregister();
-                }
-                lstHotKeys.Clear();
+                hotKey.Unregister();
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            lstHotKeys.Clear();
         }
         #endregion
 
         #region évènements et méthodes boutons menu
         private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string dernierFichierOuvert = gestionFichier.GetDernierFichierOuvert();
+            string dernierFichierOuvert = gestionFichier.GetDernierFichierOuvert();
 
-                if ((Button)sender == btnEnregistrer && dernierFichierOuvert != "")
-                    GestionEnregFichier(dernierFichierOuvert);
-                else
-                    GestionEnregFichier(gestionFichier.ChoixFichierAEnregistrer());
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            if ((Button)sender == btnEnregistrer && dernierFichierOuvert != "")
+                GestionEnregFichier(dernierFichierOuvert);
+            else
+                GestionEnregFichier(gestionFichier.ChoixFichierAEnregistrer());
         }
 
         private void btnCharger_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                string dernierFichierOuvert = gestionFichier.GetDernierFichierOuvert();
+            string dernierFichierOuvert = gestionFichier.GetDernierFichierOuvert();
 
-                if ((Button)sender == btnRecharger && dernierFichierOuvert != "")
-                    GestionChargementFichier(dernierFichierOuvert);
-                else 
-                    GestionChargementFichier(gestionFichier.ChoixFichierACharger());
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            if ((Button)sender == btnRecharger && dernierFichierOuvert != "")
+                GestionChargementFichier(dernierFichierOuvert);
+            else
+                GestionChargementFichier(gestionFichier.ChoixFichierACharger());
         }
 
         private void btnEffacer_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                foreach (TextBox tb in dicKeysTB.Values) tb.Clear();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            foreach (TextBox tb in dicKeysTB.Values) tb.Clear();
         }
 
         private void GestionEnregFichier(string pathFichier)
         {
-            try
+            if (pathFichier != "")
             {
-                if (pathFichier != "")
-                {
-                    gestionFichier.SauvegardeFichier(GetTextes(), pathFichier);
+                gestionFichier.SauvegardeFichier(GetTextes(), pathFichier);
 
-                    txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
-                    gestionFichier.SetDernierFichierOuvert(pathFichier);
+                txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
+                gestionFichier.SetDernierFichierOuvert(pathFichier);
 
-                    lblNotifEnreg.Visibility = Visibility.Visible;
-                    timerNotifEnreg.Stop();
-                    timerNotifEnreg.Start();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
+                lblNotifEnreg.Visibility = Visibility.Visible;
+                timerNotifEnreg.Stop();
+                timerNotifEnreg.Start();
             }
         }
 
         private void GestionChargementFichier(string pathFichier)
         {
-            try
+            if (pathFichier != "")
             {
-                if(pathFichier != "")
-                {
-                    SetTextes(gestionFichier.ChargementFichier(pathFichier));
+                SetTextes(gestionFichier.ChargementFichier(pathFichier));
 
-                    txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
-                    gestionFichier.SetDernierFichierOuvert(pathFichier);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
+                txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
+                gestionFichier.SetDernierFichierOuvert(pathFichier);
             }
         }
 
@@ -331,17 +259,9 @@ namespace PressePapier
         {
             var textes = new Dictionary<string, string>();
 
-            try
+            foreach (TextBox tb in dicKeysTB.Values)
             {
-                foreach (TextBox tb in dicKeysTB.Values)
-                {
-                    textes.Add(tb.Name, tb.Text);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
+                textes.Add(tb.Name, tb.Text);
             }
 
             return textes;
@@ -349,22 +269,14 @@ namespace PressePapier
 
         private void SetTextes(Dictionary<string, string> textes)
         {
-            try
+            if (textes.Count > 0)
             {
-                if (textes.Count > 0)
+                string texteAInserer;
+                foreach (TextBox tb in dicKeysTB.Values)
                 {
-                    string texteAInserer;
-                    foreach (TextBox tb in dicKeysTB.Values)
-                    {
-                        textes.TryGetValue(tb.Name, out texteAInserer);
-                        tb.Text = texteAInserer;
-                    }
+                    textes.TryGetValue(tb.Name, out texteAInserer);
+                    tb.Text = texteAInserer;
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
             }
         }
 
@@ -382,64 +294,56 @@ namespace PressePapier
         #region gestion taille et position éléments
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            //hauteur de la textbox et de son stackpanel
+            TextBox tbChanged = sender as TextBox;
+            StackPanel spChanged = tbChanged.Parent as StackPanel;
+            int lineHeight = initialLineHeight + ((tbChanged.LineCount - 1) * addLineHeight);
+            double initialTbHeight = tbChanged.Height;
+
+            tbChanged.Height = lineHeight;
+            if (tbChanged.Height > maxTbHeight)
             {
-                //hauteur de la textbox et de son stackpanel
-                TextBox tbChanged = sender as TextBox;
-                StackPanel spChanged = tbChanged.Parent as StackPanel;
-                int lineHeight = initialLineHeight + ((tbChanged.LineCount - 1) * addLineHeight);
-                double initialTbHeight = tbChanged.Height;
+                tbChanged.Height = maxTbHeight;
+            }
+            double diffTbHeight = tbChanged.Height - initialTbHeight;
 
-                tbChanged.Height = lineHeight;
-                if (tbChanged.Height > maxTbHeight)
+            spChanged.Height = lineHeight;
+            if (spChanged.Height > maxTbHeight)
+            {
+                spChanged.Height = maxTbHeight;
+            }
+
+            //hauteur de la grid, du scrollviewer et du form
+            double newGrdHeight = 0;
+            foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
+            {
+                newGrdHeight += sp.Height + 15; //+15 pour l'espace après chaque textbox
+            }
+
+            grdTextBox.Height = newGrdHeight - 15; //-15 car pas d'espace après la dernière textbox
+            svTextBox.Height = grdTextBox.Height;
+            if (svTextBox.Height > maxSvHeight)
+            {
+                svTextBox.Height = maxSvHeight;
+            }
+
+            this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
+
+            //déplacement des éléments vers le bas
+            foreach (StackPanel spMove in grdTextBox.Children.OfType<StackPanel>())
+            {
+                if (spMove.Margin.Top > spChanged.Margin.Top)
                 {
-                    tbChanged.Height = maxTbHeight;
-                }
-                double diffTbHeight = tbChanged.Height - initialTbHeight;
-
-                spChanged.Height = lineHeight;
-                if (spChanged.Height > maxTbHeight)
-                {
-                    spChanged.Height = maxTbHeight;
-                }
-
-                //hauteur de la grid, du scrollviewer et du form
-                double newGrdHeight = 0;
-                foreach (StackPanel sp in grdTextBox.Children.OfType<StackPanel>())
-                {
-                    newGrdHeight += sp.Height + 15; //+15 pour l'espace après chaque textbox
-                }
-
-                grdTextBox.Height = newGrdHeight - 15; //-15 car pas d'espace après la dernière textbox
-                svTextBox.Height = grdTextBox.Height;
-                if (svTextBox.Height > maxSvHeight)
-                {
-                    svTextBox.Height = maxSvHeight;
-                }
-
-                this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
-
-                //déplacement des éléments vers le bas
-                foreach (StackPanel spMove in grdTextBox.Children.OfType<StackPanel>())
-                {
-                    if (spMove.Margin.Top > spChanged.Margin.Top)
-                    {
-                        spMove.Margin = new Thickness(spMove.Margin.Left, spMove.Margin.Top + diffTbHeight, spMove.Margin.Right, spMove.Margin.Bottom);
-                    }
-                }
-
-                foreach (Label lblMove in grdTextBox.Children.OfType<Label>())
-                {
-                    if (lblMove.Margin.Top > spChanged.Margin.Top)
-                    {
-                        lblMove.Margin = new Thickness(lblMove.Margin.Left, lblMove.Margin.Top + diffTbHeight, lblMove.Margin.Right, lblMove.Margin.Bottom);
-                    }
+                    spMove.Margin = new Thickness(spMove.Margin.Left, spMove.Margin.Top + diffTbHeight, spMove.Margin.Right, spMove.Margin.Bottom);
                 }
             }
-            catch (Exception)
-            {
 
-                throw;
+            foreach (Label lblMove in grdTextBox.Children.OfType<Label>())
+            {
+                if (lblMove.Margin.Top > spChanged.Margin.Top)
+                {
+                    lblMove.Margin = new Thickness(lblMove.Margin.Left, lblMove.Margin.Top + diffTbHeight, lblMove.Margin.Right, lblMove.Margin.Bottom);
+                }
             }
         }
         #endregion

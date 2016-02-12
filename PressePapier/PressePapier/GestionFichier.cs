@@ -15,30 +15,28 @@ namespace PressePapier
 	{
         OpenFileDialog openFileDialog1 = new OpenFileDialog();
         SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-        string pathDossierConfig = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\PressePapier";
-        string pathFichierConfig = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\PressePapier\\config.xml";
+        string pathDossierConfig;
+        string pathFichierConfig;
+
+        public GestionFichier()
+        {
+            pathDossierConfig = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\PressePapier";
+            pathFichierConfig = pathDossierConfig + "\\config.xml";
+        }
 
     #region enregistrement
         public string ChoixFichierAEnregistrer()
         {
             string pathFichier = "";
 
-            try
-            {
-                saveFileDialog1.Filter = "Fichiers XML|*.xml|Tous les fichiers|*.*";
-                saveFileDialog1.FilterIndex = 1;
-                saveFileDialog1.RestoreDirectory = true;
-                saveFileDialog1.DefaultExt = ".xml";
+            saveFileDialog1.Filter = "Fichiers XML|*.xml|Tous les fichiers|*.*";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.DefaultExt = ".xml";
 
-                if (saveFileDialog1.ShowDialog() == true)
-                {
-                    pathFichier = saveFileDialog1.FileName;
-                }
-            }
-            catch (Exception)
+            if (saveFileDialog1.ShowDialog() == true)
             {
-
-                throw;
+                pathFichier = saveFileDialog1.FileName;
             }
 
             return pathFichier;
@@ -64,47 +62,39 @@ namespace PressePapier
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erreur lors de la sauvegarde du fichier");
+                throw new Exception("Le fichier n'a pas pu être sauvegardé :\n", ex);
             }
         }
     #endregion
 
     #region chargement
         public string ChoixFichierACharger()
-		{
-			string pathFichier = "";
+        {
+            string pathFichier = "";
 
-            try
+            // On interdit la sélection de plusieurs fichiers.
+            openFileDialog1.Multiselect = false;
+
+            // On supprime le nom de fichier, qui ici vaut "openFileDialog1" (avant sélection d'un fichier).
+            openFileDialog1.FileName = string.Empty;
+
+            // On met des filtres pour les types de fichiers : "Nom|*.extension|autreNom|*.autreExtension" (autant de filtres qu'on veut).
+            openFileDialog1.Filter = "Fichiers XML|*.xml|Tous les fichiers|*.*";
+
+            // Le filtre sélectionné : le 1er (là on ne commence pas à compter à 0).
+            openFileDialog1.FilterIndex = 1;
+
+            // On affiche le dernier dossier ouvert.
+            openFileDialog1.RestoreDirectory = true;
+
+            // Si l'utilisateur clique sur "Ouvrir"...
+            if (openFileDialog1.ShowDialog() == true)
             {
-                // On interdit la sélection de plusieurs fichiers.
-                openFileDialog1.Multiselect = false;
-
-                // On supprime le nom de fichier, qui ici vaut "openFileDialog1" (avant sélection d'un fichier).
-                openFileDialog1.FileName = string.Empty;
-
-                // On met des filtres pour les types de fichiers : "Nom|*.extension|autreNom|*.autreExtension" (autant de filtres qu'on veut).
-                openFileDialog1.Filter = "Fichiers XML|*.xml|Tous les fichiers|*.*";
-
-                // Le filtre sélectionné : le 1er (là on ne commence pas à compter à 0).
-                openFileDialog1.FilterIndex = 1;
-
-                // On affiche le dernier dossier ouvert.
-                openFileDialog1.RestoreDirectory = true;
-
-                // Si l'utilisateur clique sur "Ouvrir"...
-                if (openFileDialog1.ShowDialog() == true)
-                {
-                    pathFichier = openFileDialog1.FileName;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
+                pathFichier = openFileDialog1.FileName;
             }
 
             return pathFichier;
-		}
+        }
 
         public Dictionary<string, string> ChargementFichier(string pathFichier)
         {
@@ -130,7 +120,7 @@ namespace PressePapier
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erreur lors du chargement du fichier.");
+                throw new Exception("Le fichier n'a pas pu être chargé :\n", ex);
             }
 
             return textes;
@@ -157,7 +147,7 @@ namespace PressePapier
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erreur lors de l'écriture du fichier");
+                throw new Exception("Le fichier de configuration n'a pas pu être créé :\n", ex);
             }
         }
 
@@ -175,7 +165,7 @@ namespace PressePapier
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erreur lors de la récupération du dernier fichier ouvert.");
+                throw new Exception("Le dernier fichier ouvert n'a pas pu être récupéré :\n", ex);
             }
 
             return pathFichier;
@@ -183,17 +173,10 @@ namespace PressePapier
 
         public void SetDernierFichierOuvert(string pathFichier)
         {
-            try
-            {
-                CreateFichierConfigIfNotExists();
-                XDocument fichierConfig = XDocument.Load(pathFichierConfig);
-                fichierConfig.Element("Racine").Element("DernierFichier").SetValue(pathFichier);
-                fichierConfig.Save(pathFichierConfig);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Erreur lors de la mise à jour du fichier de configuration");
-            }
+            CreateFichierConfigIfNotExists();
+            XDocument fichierConfig = XDocument.Load(pathFichierConfig);
+            fichierConfig.Element("Racine").Element("DernierFichier").SetValue(pathFichier);
+            fichierConfig.Save(pathFichierConfig);
         }
 
     }
