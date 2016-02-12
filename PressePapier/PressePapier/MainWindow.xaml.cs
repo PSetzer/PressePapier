@@ -210,8 +210,6 @@ namespace PressePapier
         }
         #endregion
 
-        #region gestion boutons
-
         #region évènements RadioButtons
         //possibilité de transférer les traitements dans un objet à part
         private void RegisterKeys(object sender, RoutedEventArgs e)
@@ -254,7 +252,7 @@ namespace PressePapier
         }
         #endregion
 
-        #region évènements boutons menu
+        #region évènements et méthodes boutons menu
         private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -307,9 +305,7 @@ namespace PressePapier
                 throw;
             }
         }
-        #endregion
 
-        #region méthodes
         private void GestionEnregFichier(string pathFichier)
         {
             try
@@ -406,9 +402,7 @@ namespace PressePapier
         }
         #endregion
 
-        #endregion
-
-        #region gestion taille TextBox
+        #region gestion taille et position éléments
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -473,7 +467,7 @@ namespace PressePapier
         }
         #endregion
 
-        #region gestion Fenêtre
+        #region évènements Fenêtre
         private void btnMinimiser_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -508,17 +502,6 @@ namespace PressePapier
             this.Hide();
             nIcon.Visible = true;
         }
-        #endregion
-
-        #region gestion NotifyIcon
-
-        private void nIcon_Click(object sender, EventArgs e)
-        {
-            this.Show();
-            this.Activate();
-            this.WindowState = WindowState.Normal;
-            nIcon.Visible = false;
-        }
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
@@ -528,8 +511,16 @@ namespace PressePapier
                 nIcon.Visible = true;
             }
         }
+        #endregion
 
-        #region gestion TooTip
+        #region gestion NotifyIcon et ToolTip
+        private void nIcon_Click(object sender, EventArgs e)
+        {
+            this.Show();
+            this.Activate();
+            this.WindowState = WindowState.Normal;
+            nIcon.Visible = false;
+        }
 
         private void nIcon_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -578,12 +569,9 @@ namespace PressePapier
             blnShowTooltip = false;
             messageTimer.Start();
         }
-
-        #endregion
         #endregion
 
-        #region gestion Timers
-        /* gestion TooTip*/
+        #region évènements Timers
         private void messageTimer_Tick(object sender, EventArgs e)
         {
             blnShowTooltip = true;
