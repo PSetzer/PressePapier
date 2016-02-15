@@ -67,7 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="ConfigServices.cs" />
     <Compile Include="FichierUtils.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="PressePapierWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -76,8 +76,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FichierServices.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="PressePapierWindow.xaml.cs">
+      <DependentUpon>PressePapierWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\Brushes.xaml">
@@ -133,12 +133,12 @@
     <Resource Include="ClipBoardActivity.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Setup Inno\PressePapierSetup.exe" />
-    <Content Include="Setup Inno\SetupFile.iss" />
     <Resource Include="ClipBoard.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="InputSimulator.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

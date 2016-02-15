@@ -23,7 +23,7 @@ namespace PressePapier
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PressePapierWindow : Window
     {
         #region initialisation
         Dictionary<Key, TextBox> dicKeysTB = new Dictionary<Key, TextBox>();
@@ -45,7 +45,7 @@ namespace PressePapier
         System.Windows.Threading.DispatcherTimer timerNotifEnreg = new System.Windows.Threading.DispatcherTimer();
         System.Windows.Threading.DispatcherTimer timerNotifCopy = new System.Windows.Threading.DispatcherTimer();
 
-        public MainWindow()
+        public PressePapierWindow()
         {
             InitializeComponent();
         }
