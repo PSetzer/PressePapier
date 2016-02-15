@@ -34,7 +34,7 @@ namespace PressePapier
         private string GetExMessage(Object e)
         {
             Exception ex = e as Exception;
-            string exMessage = ex != null ? (ex.InnerException != null ? ex.Message + ex.InnerException.Message : ex.Message) : "";
+            string exMessage = ex != null ? (ex.InnerException != null ? ex.Message + ex.InnerException.Message : ex.Message) : "Une erreur inconnue s'est produite.";
             return exMessage;
         }
     }
