@@ -13,27 +13,27 @@ namespace PressePapierTests
             string actual;
             string expected;
 
-            actual = Utils.GetNomFichier("C:\\truc\\bidule\\test.1.2.3.xml");
+            actual = FichierUtils.GetNomFichier("C:\\truc\\bidule\\test.1.2.3.xml");
             expected = "test.1.2.3";
             Assert.AreEqual<string>(expected, actual);
 
-            actual = Utils.GetNomFichier("test.1.2.3.xml");
+            actual = FichierUtils.GetNomFichier("test.1.2.3.xml");
             expected = "test.1.2.3";
             Assert.AreEqual<string>(expected, actual);
 
-            actual = Utils.GetNomFichier("C:\\truc\\bidule\\test123.xml");
+            actual = FichierUtils.GetNomFichier("C:\\truc\\bidule\\test123.xml");
             expected = "test123";
             Assert.AreEqual<string>(expected, actual);
 
-            actual = Utils.GetNomFichier("test123.xml");
+            actual = FichierUtils.GetNomFichier("test123.xml");
             expected = "test123";
             Assert.AreEqual<string>(expected, actual);
 
-            actual = Utils.GetNomFichier("test123");
+            actual = FichierUtils.GetNomFichier("test123");
             expected = "test123";
             Assert.AreEqual<string>(expected, actual);
 
-            actual = Utils.GetNomFichier("");
+            actual = FichierUtils.GetNomFichier("");
             expected = "";
             Assert.AreEqual<string>(expected, actual);
         }

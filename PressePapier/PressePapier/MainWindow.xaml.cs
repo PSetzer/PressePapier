@@ -33,7 +33,8 @@ namespace PressePapier
         private const int maxTbHeight = 208;
         private double maxSvHeight = 0;
         private bool isAppActive = true;
-        GestionFichier gestionFichier = new GestionFichier();
+        FichierServices fichierServices = new FichierServices();
+        ConfigServices configServices = new ConfigServices();
 
         System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
         /* gestion TooTip*/
@@ -55,7 +56,7 @@ namespace PressePapier
             InitTextes();
             InitDicKeysTB();
             InitControles();
-            GestionChargementFichier(gestionFichier.GetDernierFichierOuvert());
+            GestionChargementFichier(configServices.GetDernierFichierOuvert());
             GestionDisplayTooltip();            
         }
 
@@ -206,22 +207,22 @@ namespace PressePapier
         #region évènements et méthodes boutons menu
         private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
         {
-            string dernierFichierOuvert = gestionFichier.GetDernierFichierOuvert();
+            string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
 
             if ((Button)sender == btnEnregistrer && dernierFichierOuvert != "")
                 GestionEnregFichier(dernierFichierOuvert);
             else
-                GestionEnregFichier(gestionFichier.ChoixFichierAEnregistrer());
+                GestionEnregFichier(FichierUtils.ChoixFichierAEnregistrer());
         }
 
         private void btnCharger_Click(object sender, RoutedEventArgs e)
         {
-            string dernierFichierOuvert = gestionFichier.GetDernierFichierOuvert();
+            string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
 
             if ((Button)sender == btnRecharger && dernierFichierOuvert != "")
                 GestionChargementFichier(dernierFichierOuvert);
             else
-                GestionChargementFichier(gestionFichier.ChoixFichierACharger());
+                GestionChargementFichier(FichierUtils.ChoixFichierACharger());
         }
 
         private void btnEffacer_Click(object sender, RoutedEventArgs e)
@@ -233,10 +234,10 @@ namespace PressePapier
         {
             if (pathFichier != "")
             {
-                gestionFichier.SauvegardeFichier(GetTextes(), pathFichier);
+                fichierServices.SauvegardeFichier(GetTextes(), pathFichier);
 
-                txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
-                gestionFichier.SetDernierFichierOuvert(pathFichier);
+                txtbFichierEnCours.Text = FichierUtils.GetNomFichier(pathFichier);
+                configServices.SetDernierFichierOuvert(pathFichier);
 
                 lblNotifEnreg.Visibility = Visibility.Visible;
                 timerNotifEnreg.Stop();
@@ -248,10 +249,10 @@ namespace PressePapier
         {
             if (pathFichier != "")
             {
-                SetTextes(gestionFichier.ChargementFichier(pathFichier));
+                SetTextes(fichierServices.ChargementFichier(pathFichier));
 
-                txtbFichierEnCours.Text = Utils.GetNomFichier(pathFichier);
-                gestionFichier.SetDernierFichierOuvert(pathFichier);
+                txtbFichierEnCours.Text = FichierUtils.GetNomFichier(pathFichier);
+                configServices.SetDernierFichierOuvert(pathFichier);
             }
         }
 
