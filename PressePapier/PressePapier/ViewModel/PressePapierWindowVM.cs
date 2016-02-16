@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PressePapier.ViewModel
 {
@@ -140,7 +142,38 @@ namespace PressePapier.ViewModel
             }
         }
 
-        
+        private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
 
+        public PressePapierWindowVM()
+        {
+            InitDicKeysTextes();
+        }
+
+        private void InitDicKeysTextes()
+        {
+            dicKeysTextes.Add(Key.D1, TextTB1);
+            /*dicKeysTextes.Add(Key.D2, _textTB2);
+            dicKeysTextes.Add(Key.D3, _textTB3);
+            dicKeysTextes.Add(Key.D4, _textTB4);
+            dicKeysTextes.Add(Key.D5, _textTB5);
+            dicKeysTextes.Add(Key.D6, _textTB6);
+            dicKeysTextes.Add(Key.D7, _textTB7);
+            dicKeysTextes.Add(Key.D8, _textTB8);
+            dicKeysTextes.Add(Key.D9, _textTB9);
+            dicKeysTextes.Add(Key.D0, _textTB10);*/
+        }
+
+        public ICommand EffacerTextesCommand
+        {
+            get { return new RelayCommand(EffacerTextes); }
+        }
+
+        private void EffacerTextes()
+        {
+            foreach (var p in this.GetType().GetProperties())
+            {
+                if (p.Name.StartsWith("TextTB")) p.SetValue(this, "");
+            }
+        }
     }
 }
