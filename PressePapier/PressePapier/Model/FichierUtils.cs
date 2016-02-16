@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using System.Windows;
+using System.Threading;
 
 namespace PressePapier.Model
 {
@@ -84,6 +86,38 @@ namespace PressePapier.Model
             }
 
             return pathFichier;
+        }
+
+        public static string GetClipBoardText()
+        {
+            string contenu = "";
+            bool blnDone = false;
+            int count = 0;
+
+            if (Clipboard.GetDataObject().GetDataPresent(System.Windows.DataFormats.Text))
+            {
+                //boucle afin de gérer le bug WPF CLIPBRD_E_CANT_OPEN
+                while (!blnDone)
+                {
+                    try
+                    {
+                        count += 1;
+                        contenu = (string)Clipboard.GetData(System.Windows.DataFormats.Text);
+                        blnDone = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        if (count > 50)
+                        {
+                            blnDone = true;
+                            throw new Exception("Le contenu du Presse Papier n'a pas pu être récupéré :\n", ex);
+                        }
+                        Thread.Sleep(100);
+                    }
+                }
+            }
+
+            return contenu;
         }
     }
 }
