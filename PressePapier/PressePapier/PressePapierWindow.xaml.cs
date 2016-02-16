@@ -21,7 +21,7 @@ using Microsoft.Win32;
 namespace PressePapier
 {
     /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
+    /// Logique d'interaction pour PressePapierWindow.xaml
     /// </summary>
     public partial class PressePapierWindow : Window
     {
