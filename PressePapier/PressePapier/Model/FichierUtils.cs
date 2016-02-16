@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 
-namespace PressePapier
+namespace PressePapier.Model
 {
     public static class FichierUtils
     {

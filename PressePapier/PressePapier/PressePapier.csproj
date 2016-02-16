@@ -7,7 +7,7 @@
     <ProjectGuid>{1324657E-8391-4A87-9167-40191CD16AF7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PressePapier</RootNamespace>
+    <RootNamespace>PressePapier.View</RootNamespace>
     <AssemblyName>PressePapier</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ClipBoard.ico</ApplicationIcon>
+    <ApplicationIcon>View\ClipBoard.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="InputSimulator, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -65,11 +65,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfigServices.cs" />
-    <Compile Include="FichierUtils.cs" />
+    <Compile Include="Model\ConfigServices.cs" />
+    <Compile Include="Model\FichierUtils.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\PressePapierWindowVM.cs" />
-    <Page Include="PressePapierWindow.xaml">
+    <Page Include="View\PressePapierWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -77,8 +77,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FichierServices.cs" />
-    <Compile Include="PressePapierWindow.xaml.cs">
+    <Compile Include="Model\FichierServices.cs" />
+    <Compile Include="View\PressePapierWindow.xaml.cs">
       <DependentUpon>PressePapierWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -104,7 +104,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OuelletKeyHandler.cs" />
+    <Compile Include="Model\OuelletKeyHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -132,10 +132,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ClipBoardActivity.ico">
+    <Resource Include="View\ClipBoardActivity.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="ClipBoard.ico">
+    <Resource Include="View\ClipBoard.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

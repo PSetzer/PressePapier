@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PressePapier;
+using PressePapier.Model;
 
 namespace PressePapierTests
 {

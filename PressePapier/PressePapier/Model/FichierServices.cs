@@ -9,7 +9,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Microsoft.Win32;
 
-namespace PressePapier
+namespace PressePapier.Model
 {
 	class FichierServices
 	{

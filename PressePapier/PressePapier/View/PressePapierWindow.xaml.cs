@@ -17,8 +17,9 @@ using System.Data;
 using System.Threading;
 using WindowsInput;
 using Microsoft.Win32;
+using PressePapier.Model;
 
-namespace PressePapier
+namespace PressePapier.View
 {
     /// <summary>
     /// Logique d'interaction pour PressePapierWindow.xaml
