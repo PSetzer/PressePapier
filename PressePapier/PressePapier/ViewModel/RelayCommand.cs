@@ -10,10 +10,16 @@ namespace PressePapier.ViewModel
     class RelayCommand : ICommand
     {
         private readonly Action _action;
+        private readonly Action<string> _actionS;
 
         public RelayCommand(Action action)
         {
             _action = action;
+        }
+
+        public RelayCommand(Action<string> action)
+        {
+            _actionS = action;
         }
         
         public bool CanExecute(object parameter)
@@ -25,7 +31,9 @@ namespace PressePapier.ViewModel
 
         public void Execute(object parameter)
         {
-            _action();
+            string s = parameter as string;
+            if (s != null) _actionS(s);
+            else _action();
         }
     }
 }
