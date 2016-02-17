@@ -12,7 +12,7 @@ namespace PressePapier.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged (string propertyName)
+        public void OnPropertyChanged (string propertyName = "")
         {
             if (PropertyChanged != null)
             {
