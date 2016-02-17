@@ -1,10 +1,15 @@
-﻿using System;
+﻿using PressePapier.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using WindowsInput;
 
 namespace PressePapier.ViewModel
 {
@@ -17,7 +22,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB1 = value;
-                OnPropertyChanged(TextTB1);
+                OnPropertyChanged("TextTB1");
             }
         }
 
@@ -28,7 +33,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB2 = value;
-                OnPropertyChanged(TextTB2);
+                OnPropertyChanged("TextTB2");
             }
         }
 
@@ -39,7 +44,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB3 = value;
-                OnPropertyChanged(TextTB3);
+                OnPropertyChanged("TextTB3");
             }
         }
 
@@ -50,7 +55,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB4 = value;
-                OnPropertyChanged(TextTB4);
+                OnPropertyChanged("TextTB4");
             }
         }
 
@@ -61,7 +66,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB5 = value;
-                OnPropertyChanged(TextTB5);
+                OnPropertyChanged("TextTB5");
             }
         }
 
@@ -72,7 +77,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB6 = value;
-                OnPropertyChanged(TextTB6);
+                OnPropertyChanged("TextTB6");
             }
         }
 
@@ -83,7 +88,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB7 = value;
-                OnPropertyChanged(TextTB7);
+                OnPropertyChanged("TextTB7");
             }
         }
 
@@ -94,7 +99,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB8 = value;
-                OnPropertyChanged(TextTB8);
+                OnPropertyChanged("TextTB8");
             }
         }
 
@@ -105,7 +110,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB9 = value;
-                OnPropertyChanged(TextTB9);
+                OnPropertyChanged("TextTB9");
             }
         }
 
@@ -116,7 +121,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textTB10 = value;
-                OnPropertyChanged(TextTB10);
+                OnPropertyChanged("TextTB10");
             }
         }
 
@@ -127,7 +132,7 @@ namespace PressePapier.ViewModel
             set
             {
                 _textFichierEnCours = value;
-                OnPropertyChanged(TextFichierEnCours);
+                OnPropertyChanged("TextFichierEnCours");
             }
         }
 
@@ -138,11 +143,45 @@ namespace PressePapier.ViewModel
             set
             {
                 _textEnregEffectue = value;
-                OnPropertyChanged(TextEnregEffectue);
+                OnPropertyChanged("TextEnregEffectue");
+            }
+        }
+
+        private bool? _isRbCtrlChecked;
+        public bool? IsRbCtrlChecked
+        {
+            get { return _isRbCtrlChecked; }
+            set
+            {
+                _isRbCtrlChecked = value;
+                OnPropertyChanged("IsRbCtrlChecked");
+            }
+        }
+
+        private bool? _isRbAltChecked;
+        public bool? IsRbAltChecked
+        {
+            get { return _isRbAltChecked; }
+            set
+            {
+                _isRbAltChecked = value;
+                OnPropertyChanged("IsRbAltChecked");
+            }
+        }
+
+        private bool _isAppActive;
+        public bool IsAppActive
+        {
+            get { return _isAppActive; }
+            set
+            {
+                _isAppActive = value;
+                OnPropertyChanged("IsAppActive");
             }
         }
 
         private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
+        List<HotKey> lstHotKeys = new List<HotKey>();
 
         public PressePapierWindowVM()
         {
@@ -151,16 +190,60 @@ namespace PressePapier.ViewModel
 
         private void InitDicKeysTextes()
         {
-            dicKeysTextes.Add(Key.D1, TextTB1);
-            /*dicKeysTextes.Add(Key.D2, _textTB2);
-            dicKeysTextes.Add(Key.D3, _textTB3);
-            dicKeysTextes.Add(Key.D4, _textTB4);
-            dicKeysTextes.Add(Key.D5, _textTB5);
-            dicKeysTextes.Add(Key.D6, _textTB6);
-            dicKeysTextes.Add(Key.D7, _textTB7);
-            dicKeysTextes.Add(Key.D8, _textTB8);
-            dicKeysTextes.Add(Key.D9, _textTB9);
-            dicKeysTextes.Add(Key.D0, _textTB10);*/
+            dicKeysTextes.Add(Key.D1, "TextTB1");
+            dicKeysTextes.Add(Key.D2, "TextTB2");
+            dicKeysTextes.Add(Key.D3, "TextTB3");
+            dicKeysTextes.Add(Key.D4, "TextTB4");
+            dicKeysTextes.Add(Key.D5, "TextTB5");
+            dicKeysTextes.Add(Key.D6, "TextTB6");
+            dicKeysTextes.Add(Key.D7, "TextTB7");
+            dicKeysTextes.Add(Key.D8, "TextTB8");
+            dicKeysTextes.Add(Key.D9, "TextTB9");
+            dicKeysTextes.Add(Key.D0, "TextTB10");
+        }
+
+        void OnHotKeyHandler(HotKey hotKey)
+        {
+            if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl | KeyModifier.Shift) && IsRbCtrlChecked == true ||
+                hotKey.KeyModifiers.Equals(KeyModifier.Alt | KeyModifier.Shift) && IsRbAltChecked == true)
+            {
+                string contenu = FichierUtils.GetClipBoardText();
+
+                if (contenu != "")
+                {
+                    foreach (var p in this.GetType().GetProperties())
+                    {
+                        if (dicKeysTextes[hotKey.Key] == p.Name)
+                            p.SetValue(this, contenu);
+                    }
+
+                    /*nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+                    this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+                    timerNotifCopy.Stop();
+                    timerNotifCopy.Start();*/
+                }
+            }
+            else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && IsRbCtrlChecked == true ||
+                        hotKey.KeyModifiers.Equals(KeyModifier.Alt) && IsRbAltChecked == true)
+            {
+                if (!IsAppActive)
+                {
+                    //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
+                    //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
+                    while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+
+                foreach (var p in this.GetType().GetProperties())
+                {
+                    if (dicKeysTextes[hotKey.Key] == p.Name)
+                        Clipboard.SetDataObject(p.GetValue(this));
+                }
+
+                InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+            }
         }
 
         public ICommand EffacerTextesCommand
@@ -172,7 +255,29 @@ namespace PressePapier.ViewModel
         {
             foreach (var p in this.GetType().GetProperties())
             {
-                if (p.Name.StartsWith("TextTB")) p.SetValue(this, "");
+                if (dicKeysTextes.Values.Contains(p.Name)) p.SetValue(this, "");
+            }
+        }
+
+        public ICommand ModifToucheRaccourciCommand
+        {
+            get { return new RelayCommand(ModifToucheRaccourci); }
+        }
+
+        public void ModifToucheRaccourci(string buttonName)
+        {
+            foreach (HotKey hotKey in lstHotKeys)
+                hotKey.Unregister();
+            lstHotKeys.Clear();
+
+            KeyModifier keyModifier;
+            if (buttonName == "rbCtrl") keyModifier = KeyModifier.Ctrl;
+            else keyModifier = KeyModifier.Alt;
+
+            foreach (var key in dicKeysTextes.Keys)
+            {
+                lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandler));
+                lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandler));
             }
         }
     }
