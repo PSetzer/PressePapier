@@ -169,14 +169,14 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private bool _isAppActive;
-        public bool IsAppActive
+        private Visibility _appVisibility;
+        public Visibility AppVisibility
         {
-            get { return _isAppActive; }
+            get { return _appVisibility; }
             set
             {
-                _isAppActive = value;
-                OnPropertyChanged("IsAppActive");
+                _appVisibility = value;
+                OnPropertyChanged("AppVisibility");
             }
         }
 
@@ -226,7 +226,7 @@ namespace PressePapier.ViewModel
             else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && IsRbCtrlChecked == true ||
                         hotKey.KeyModifiers.Equals(KeyModifier.Alt) && IsRbAltChecked == true)
             {
-                if (!IsAppActive)
+                if (AppVisibility != Visibility.Visible)
                 {
                     //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
                     //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier

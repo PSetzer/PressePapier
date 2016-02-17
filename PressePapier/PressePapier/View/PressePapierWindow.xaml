@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewmodel="clr-namespace:PressePapier.ViewModel"
-        Title="PressePapier" Visibility="{Binding IsAppActive, Mode=TwoWay}" WindowStyle="None" BorderThickness="0" AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="598" Width="418" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Name="PressePapier" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated" Activated="Window_Activated">
+        Title="PressePapier" Visibility="{Binding AppVisibility, Mode=TwoWay}" WindowStyle="None" BorderThickness="0" AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="598" Width="418" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Name="PressePapier" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated" Activated="Window_Activated">
 
     <Window.Resources>
         <ResourceDictionary>
