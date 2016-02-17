@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Model\FichierServices.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\RelayCommandGeneric.cs" />
     <Compile Include="View\PressePapierWindow.xaml.cs">
       <DependentUpon>PressePapierWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
