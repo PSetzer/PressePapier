@@ -203,6 +203,18 @@ namespace PressePapier.ViewModel
         
         private void OnHotKeyHandlerStore(HotKey hotKey)
         {
+            if (AppVisibility != Visibility.Visible)
+            {
+                //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent, sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
+                while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
+                {
+                    Thread.Sleep(100);
+                }
+            }
+
+            //les touches de raccourci de stockage doivent être maintenues un moment pour que ce mécanisme marche
+            InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
+            
             string contenu = FichierUtils.GetClipBoardText();
 
             if (contenu != "")
