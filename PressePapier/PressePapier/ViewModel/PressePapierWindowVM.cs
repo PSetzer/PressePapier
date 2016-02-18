@@ -186,6 +186,7 @@ namespace PressePapier.ViewModel
         public PressePapierWindowVM()
         {
             InitDicKeysTextes();
+            ModifToucheRaccourci("rbCtrl");
         }
 
         private void InitDicKeysTextes()
