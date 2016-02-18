@@ -61,11 +61,11 @@ namespace PressePapier.View
             GestionDisplayTooltip();            
         }
 
-        private void InitTextes()
+        /*private void InitTextes()
         {
             lblNotifEnreg.Visibility = Visibility.Hidden;
             txtbFichierEnCours.Text = "";
-        }
+        }*/
 
         private void InitDicKeysTB()
         {
@@ -108,7 +108,7 @@ namespace PressePapier.View
 
         #endregion
 
-        #region actions touches de raccourci
+        /*#region actions touches de raccourci
         void OnHotKeyHandler(HotKey hotKey)
         {
             if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl | KeyModifier.Shift) && rbCtrl.IsChecked == true ||
@@ -246,7 +246,7 @@ namespace PressePapier.View
                     tb.Text = texteAInserer;
                 }
             }
-        }
+        }*/
 
         private void txtbFichierEnCours_ToolTipOpening(object sender, ToolTipEventArgs e)
         {
@@ -257,7 +257,7 @@ namespace PressePapier.View
             }
             else e.Handled = true;
         }
-        #endregion
+        //#endregion
 
         #region gestion taille et position éléments
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -381,7 +381,7 @@ namespace PressePapier.View
 
         private void GestionDisplayTooltip()
         {
-            Dictionary<string, string> textes = GetTextes();
+            /*Dictionary<string, string> textes = GetTextes();
             string tooltipText = "";
             bool aucunTexte = true;
 
@@ -416,7 +416,7 @@ namespace PressePapier.View
 
             nIcon.ShowBalloonTip(5000, this.Title, tooltipText, System.Windows.Forms.ToolTipIcon.None);
             blnShowTooltip = false;
-            messageTimer.Start();
+            messageTimer.Start();*/
         }
         #endregion
 
