@@ -147,28 +147,6 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private bool? _isRbCtrlChecked;
-        public bool? IsRbCtrlChecked
-        {
-            get { return _isRbCtrlChecked; }
-            set
-            {
-                _isRbCtrlChecked = value;
-                OnPropertyChanged("IsRbCtrlChecked");
-            }
-        }
-
-        private bool? _isRbAltChecked;
-        public bool? IsRbAltChecked
-        {
-            get { return _isRbAltChecked; }
-            set
-            {
-                _isRbAltChecked = value;
-                OnPropertyChanged("IsRbAltChecked");
-            }
-        }
-
         private Visibility _appVisibility;
         public Visibility AppVisibility
         {
@@ -203,48 +181,42 @@ namespace PressePapier.ViewModel
             dicKeysTextes.Add(Key.D0, "TextTB10");
         }
 
-        //faire deux fonctions !!
-        void OnHotKeyHandler(HotKey hotKey)
+        private void OnHotKeyHandlerCopy(HotKey hotKey)
         {
-            if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl | KeyModifier.Shift) && IsRbCtrlChecked == true ||
-                hotKey.KeyModifiers.Equals(KeyModifier.Alt | KeyModifier.Shift) && IsRbAltChecked == true)
+            if (AppVisibility != Visibility.Visible)
             {
-                string contenu = FichierUtils.GetClipBoardText();
-
-                if (contenu != "")
+                //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent, sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
+                while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
                 {
-                    foreach (var p in this.GetType().GetProperties())
-                    {
-                        if (dicKeysTextes[hotKey.Key] == p.Name)
-                            p.SetValue(this, contenu);
-                    }
-
-                    /*nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
-                    this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
-                    timerNotifCopy.Stop();
-                    timerNotifCopy.Start();*/
+                    Thread.Sleep(100);
                 }
             }
-            else if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl) && IsRbCtrlChecked == true ||
-                        hotKey.KeyModifiers.Equals(KeyModifier.Alt) && IsRbAltChecked == true)
-            {
-                if (AppVisibility != Visibility.Visible)
-                {
-                    //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent
-                    //sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
-                    while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
-                    {
-                        Thread.Sleep(100);
-                    }
-                }
 
+            foreach (var p in this.GetType().GetProperties())
+            {
+                if (dicKeysTextes[hotKey.Key] == p.Name)
+                    Clipboard.SetDataObject(p.GetValue(this));
+            }
+
+            InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+        }
+        
+        private void OnHotKeyHandlerStore(HotKey hotKey)
+        {
+            string contenu = FichierUtils.GetClipBoardText();
+
+            if (contenu != "")
+            {
                 foreach (var p in this.GetType().GetProperties())
                 {
                     if (dicKeysTextes[hotKey.Key] == p.Name)
-                        Clipboard.SetDataObject(p.GetValue(this));
+                        p.SetValue(this, contenu);
                 }
 
-                InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+                /*nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+                this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+                timerNotifCopy.Stop();
+                timerNotifCopy.Start();*/
             }
         }
 
@@ -278,8 +250,8 @@ namespace PressePapier.ViewModel
 
             foreach (var key in dicKeysTextes.Keys)
             {
-                lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandler));
-                lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandler));
+                lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandlerCopy));
+                lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandlerStore));
             }
         }
     }
