@@ -203,6 +203,7 @@ namespace PressePapier.ViewModel
             dicKeysTextes.Add(Key.D0, "TextTB10");
         }
 
+        //faire deux fonctions !!
         void OnHotKeyHandler(HotKey hotKey)
         {
             if (hotKey.KeyModifiers.Equals(KeyModifier.Ctrl | KeyModifier.Shift) && IsRbCtrlChecked == true ||

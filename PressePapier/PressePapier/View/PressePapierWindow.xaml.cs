@@ -38,7 +38,7 @@ namespace PressePapier.View
         ConfigServices configServices = new ConfigServices();
 
         System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
-        /* gestion TooTip*/
+
         public delegate void MouseEventHandler(object sender, System.Windows.Forms.MouseEventArgs e);
         System.Windows.Threading.DispatcherTimer messageTimer = new System.Windows.Threading.DispatcherTimer();
         private bool blnShowTooltip = true;
@@ -94,7 +94,6 @@ namespace PressePapier.View
             nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
             nIcon.Click += new EventHandler(nIcon_Click);
 
-            /* gestion TooTip*/
             nIcon.BalloonTipClicked += new EventHandler(nIcon_Click);
             nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
 
@@ -148,7 +147,6 @@ namespace PressePapier.View
         #endregion
 
         #region évènements RadioButtons
-        //possibilité de transférer les traitements dans un objet à part
         private void RegisterKeys(object sender, RoutedEventArgs e)
         {
             // touches de collage vers un éditeur de texte
