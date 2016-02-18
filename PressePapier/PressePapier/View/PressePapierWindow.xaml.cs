@@ -54,10 +54,10 @@ namespace PressePapier.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-            InitTextes();
+            //InitTextes();
             InitDicKeysTB();
             InitControles();
-            GestionChargementFichier(configServices.GetDernierFichierOuvert());
+            //GestionChargementFichier(configServices.GetDernierFichierOuvert());
             GestionDisplayTooltip();            
         }
 
@@ -88,7 +88,7 @@ namespace PressePapier.View
             this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
 
-            rbCtrl.IsChecked = true;
+            //rbCtrl.IsChecked = true;
             txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
             nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
@@ -262,7 +262,7 @@ namespace PressePapier.View
         #region gestion taille et position éléments
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //hauteur de la textbox et de son stackpanel
+            /*//hauteur de la textbox et de son stackpanel
             TextBox tbChanged = sender as TextBox;
             StackPanel spChanged = tbChanged.Parent as StackPanel;
             int lineHeight = initialLineHeight + ((tbChanged.LineCount - 1) * addLineHeight);
@@ -312,7 +312,7 @@ namespace PressePapier.View
                 {
                     lblMove.Margin = new Thickness(lblMove.Margin.Left, lblMove.Margin.Top + diffTbHeight, lblMove.Margin.Right, lblMove.Margin.Bottom);
                 }
-            }
+            }*/
         }
         #endregion
 

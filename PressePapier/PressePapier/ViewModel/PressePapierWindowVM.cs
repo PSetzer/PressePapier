@@ -15,6 +15,7 @@ namespace PressePapier.ViewModel
 {
     class PressePapierWindowVM : ObservableObject
     {
+        #region properties
         private string _textTB1;
         public string TextTB1
         {
@@ -136,14 +137,14 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private string _textEnregEffectue;
-        public string TextEnregEffectue
+        private Visibility _lblNotifEnregVisibility;
+        public Visibility LblNotifEnregVisibility
         {
-            get { return _textEnregEffectue; }
+            get { return _lblNotifEnregVisibility; }
             set
             {
-                _textEnregEffectue = value;
-                OnPropertyChanged("TextEnregEffectue");
+                _lblNotifEnregVisibility = value;
+                OnPropertyChanged("LblNotifEnregVisibility");
             }
         }
 
@@ -158,13 +159,47 @@ namespace PressePapier.ViewModel
             }
         }
 
+        public ICommand SauvegarderTextesCommand
+        {
+            get { return new RelayCommand(SauvegarderTextes); }
+        }
+
+        public ICommand ChargerTextesCommand
+        {
+            get { return new RelayCommand(ChargerTextes); }
+        }
+
+        public ICommand EffacerTextesCommand
+        {
+            get { return new RelayCommand(EffacerTextes); }
+        }
+
+        public ICommand ModifToucheRaccourciCommand
+        {
+            get { return new RelayCommand(ModifToucheRaccourci); }
+        }
+        #endregion properties
+
         private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
         List<HotKey> lstHotKeys = new List<HotKey>();
+        FichierServices fichierServices = new FichierServices();
+        ConfigServices configServices = new ConfigServices();
 
         public PressePapierWindowVM()
         {
+            InitProperties();
             InitDicKeysTextes();
             ModifToucheRaccourci("rbCtrl");
+            ChargerTextes("btnRecharger");
+        }
+
+        private void InitProperties()
+        {
+            foreach (var p in this.GetType().GetProperties().Where(p => p.GetType() == typeof(string)))
+                p.SetValue(this, "");
+
+            LblNotifEnregVisibility = Visibility.Hidden;
+            AppVisibility = Visibility.Hidden;
         }
 
         private void InitDicKeysTextes()
@@ -192,12 +227,10 @@ namespace PressePapier.ViewModel
                 }
             }
 
-            foreach (var p in this.GetType().GetProperties())
-            {
-                if (dicKeysTextes[hotKey.Key] == p.Name)
-                    Clipboard.SetDataObject(p.GetValue(this));
-            }
-
+            string pName = dicKeysTextes[hotKey.Key];
+            string text = (string)this.GetType().GetProperties().Single(p => p.Name == pName).GetValue(this);
+            Clipboard.SetDataObject(text);
+            
             InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
         }
         
@@ -219,11 +252,8 @@ namespace PressePapier.ViewModel
 
             if (contenu != "")
             {
-                foreach (var p in this.GetType().GetProperties())
-                {
-                    if (dicKeysTextes[hotKey.Key] == p.Name)
-                        p.SetValue(this, contenu);
-                }
+                string pName = dicKeysTextes[hotKey.Key];
+                this.GetType().GetProperties().Single(p => p.Name == pName).SetValue(this, contenu);
 
                 /*nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
                 this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
@@ -232,22 +262,78 @@ namespace PressePapier.ViewModel
             }
         }
 
-        public ICommand EffacerTextesCommand
+        private void SauvegarderTextes(string buttonName)
         {
-            get { return new RelayCommand(EffacerTextes); }
+            string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
+            string pathFichier = "";
+
+            if (buttonName == "btnEnregistrer" && dernierFichierOuvert != "")
+                pathFichier = dernierFichierOuvert;
+            else
+                pathFichier = FichierUtils.ChoixFichierAEnregistrer();
+
+            if (pathFichier != "")
+            {
+                fichierServices.SauvegardeFichier(GetTextes(), pathFichier);
+
+                TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
+                configServices.SetDernierFichierOuvert(pathFichier);
+
+                /*LblNotifEnregVisibility = Visibility.Visible;
+                timerNotifEnreg.Stop();
+                timerNotifEnreg.Start();*/
+            }
+        }
+
+        private void ChargerTextes(string buttonName)
+        {
+            string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
+            string pathFichier = "";
+
+            if (buttonName == "btnRecharger" && dernierFichierOuvert != "")
+                pathFichier = dernierFichierOuvert;
+            else
+                pathFichier = FichierUtils.ChoixFichierACharger();
+
+            if (pathFichier != "")
+            {
+                SetTextes(fichierServices.ChargementFichier(pathFichier));
+
+                TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
+                configServices.SetDernierFichierOuvert(pathFichier);
+            }
+        }
+
+        private Dictionary<string, string> GetTextes()
+        {
+            var textes = new Dictionary<string, string>();
+
+            foreach (string tb in dicKeysTextes.Values)
+            {
+                string text = (string)this.GetType().GetProperties().Single(p => p.Name == tb).GetValue(this);
+                textes.Add(tb, text);
+            }
+
+            return textes;
+        }
+
+        private void SetTextes(Dictionary<string, string> textes)
+        {
+            if (textes.Count > 0)
+            {
+                string texteAInserer;
+                foreach (string tb in dicKeysTextes.Values)
+                {
+                    textes.TryGetValue(tb, out texteAInserer);
+                    this.GetType().GetProperties().Single(p => p.Name == tb).SetValue(this, texteAInserer);
+                }
+            }
         }
 
         private void EffacerTextes()
         {
-            foreach (var p in this.GetType().GetProperties())
-            {
-                if (dicKeysTextes.Values.Contains(p.Name)) p.SetValue(this, "");
-            }
-        }
-
-        public ICommand ModifToucheRaccourciCommand
-        {
-            get { return new RelayCommand(ModifToucheRaccourci); }
+            foreach (var p in this.GetType().GetProperties().Where(p => dicKeysTextes.Values.Contains(p.Name)))
+                p.SetValue(this, "");
         }
 
         public void ModifToucheRaccourci(string buttonName)
