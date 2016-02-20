@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using WindowsInput;
 
 namespace PressePapier.ViewModel
@@ -279,10 +280,15 @@ namespace PressePapier.ViewModel
                 TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
                 configServices.SetDernierFichierOuvert(pathFichier);
 
-                /*LblNotifEnregVisibility = Visibility.Visible;
-                timerNotifEnreg.Stop();
-                timerNotifEnreg.Start();*/
+                NotifEnreg();
             }
+        }
+
+        private async Task NotifEnreg()
+        {
+            LblNotifEnregVisibility = Visibility.Visible;
+            await Task.Delay(4000);
+            LblNotifEnregVisibility = Visibility.Hidden;
         }
 
         private void ChargerTextes(string buttonName)
