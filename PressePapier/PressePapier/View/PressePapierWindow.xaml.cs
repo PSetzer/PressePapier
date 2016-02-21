@@ -106,7 +106,7 @@ namespace PressePapier.View
 
             timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
             timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
-            timerNotifCopy.Tick += new EventHandler(timerNotifCopy_Tick);
+            //timerNotifCopy.Tick += new EventHandler(timerNotifCopy_Tick);
             timerNotifCopy.Interval = new TimeSpan(0, 0, 0, 1, 0);
         }
 
