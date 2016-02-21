@@ -62,7 +62,7 @@ namespace PressePapier.View
             InitDicKeysTB();
             InitControles();
             //GestionChargementFichier(configServices.GetDernierFichierOuvert());
-            GestionDisplayTooltip();            
+            //GestionDisplayTooltip();            
         }
 
         /*private void InitTextes()
@@ -101,13 +101,13 @@ namespace PressePapier.View
             nIcon.BalloonTipClicked += new EventHandler(nIcon_Click);
             nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
 
-            messageTimer.Tick += new EventHandler(messageTimer_Tick);
-            messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
+            //messageTimer.Tick += new EventHandler(messageTimer_Tick);
+            //messageTimer.Interval = new TimeSpan(0, 0, 0, 4, 0);
 
-            timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
-            timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
+            //timerNotifEnreg.Tick += new EventHandler(timerNotifEnreg_Tick);
+            //timerNotifEnreg.Interval = new TimeSpan(0, 0, 0, 4, 0);
             //timerNotifCopy.Tick += new EventHandler(timerNotifCopy_Tick);
-            timerNotifCopy.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            //timerNotifCopy.Interval = new TimeSpan(0, 0, 0, 1, 0);
         }
 
         #endregion
@@ -377,15 +377,12 @@ namespace PressePapier.View
 
         private void nIcon_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (blnShowTooltip)
-            {
-                GestionDisplayTooltip();
-            }
+            viewModel.GestionDisplayTooltip();
         }
 
-        private void GestionDisplayTooltip()
+        /*private void GestionDisplayTooltip()
         {
-            /*Dictionary<string, string> textes = GetTextes();
+            Dictionary<string, string> textes = GetTextes();
             string tooltipText = "";
             bool aucunTexte = true;
 
@@ -420,12 +417,12 @@ namespace PressePapier.View
 
             nIcon.ShowBalloonTip(5000, this.Title, tooltipText, System.Windows.Forms.ToolTipIcon.None);
             blnShowTooltip = false;
-            messageTimer.Start();*/
-        }
+            messageTimer.Start();
+        }*/
         #endregion
 
         #region évènements Timers
-        private void messageTimer_Tick(object sender, EventArgs e)
+        /*private void messageTimer_Tick(object sender, EventArgs e)
         {
             blnShowTooltip = true;
             messageTimer.Stop();
@@ -437,7 +434,7 @@ namespace PressePapier.View
             timerNotifEnreg.Stop();
         }
 
-        /*private void timerNotifCopy_Tick(object sender, EventArgs e)
+        private void timerNotifCopy_Tick(object sender, EventArgs e)
         {
             nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
             this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));

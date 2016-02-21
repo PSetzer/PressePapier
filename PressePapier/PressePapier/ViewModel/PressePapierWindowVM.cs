@@ -200,6 +200,7 @@ namespace PressePapier.ViewModel
         List<HotKey> lstHotKeys = new List<HotKey>();
         FichierServices fichierServices = new FichierServices();
         ConfigServices configServices = new ConfigServices();
+        private bool blnShowTooltip = true;
 
         public PressePapierWindowVM(NotifyIcon nIcon)
         {
@@ -208,6 +209,7 @@ namespace PressePapier.ViewModel
             InitDicKeysTextes();
             ModifToucheRaccourci("rbCtrl");
             ChargerTextes("btnRecharger");
+            GestionDisplayTooltip();
         }
 
         private void InitProperties()
@@ -381,6 +383,55 @@ namespace PressePapier.ViewModel
                 lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandlerCopy));
                 lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandlerStore));
             }
+        }
+
+        public void GestionDisplayTooltip()
+        {
+            if (blnShowTooltip)
+            {
+                Dictionary<string, string> textes = GetTextes();
+                string tooltipText = "";
+                bool aucunTexte = true;
+
+                if (TextFichierEnCours != "")
+                {
+                    tooltipText = TextFichierEnCours + "\n";
+                    if (tooltipText.Length > 28)
+                    {
+                        tooltipText = tooltipText.Substring(0, 25) + "...\n";
+                    }
+                }
+
+                foreach (var text in textes)
+                {
+                    string numTextbox = text.Key.Substring(6);
+                    string premiereLigne = text.Value.Split('\n')[0];
+                    if (premiereLigne != "")
+                    {
+                        aucunTexte = false;
+                        if (premiereLigne.Length > 24)
+                        {
+                            premiereLigne = premiereLigne.Substring(0, 21) + "...";
+                        }
+                        tooltipText += numTextbox + " : " + premiereLigne + "\n";
+                    }
+                }
+
+                if (aucunTexte)
+                {
+                    tooltipText += "Aucun texte";
+                }
+
+                _nIcon.ShowBalloonTip(5000, "PressePapier", tooltipText, ToolTipIcon.None);
+                DelayShowTooltip();
+            }
+        }
+
+        private async Task DelayShowTooltip()
+        {
+            blnShowTooltip = false;
+            await Task.Delay(4000);
+            blnShowTooltip = true;
         }
     }
 }
