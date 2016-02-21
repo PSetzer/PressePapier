@@ -18,6 +18,7 @@ using System.Threading;
 using WindowsInput;
 using Microsoft.Win32;
 using PressePapier.Model;
+using PressePapier.ViewModel;
 
 namespace PressePapier.View
 {
@@ -36,6 +37,7 @@ namespace PressePapier.View
         private bool isAppActive = true;
         FichierServices fichierServices = new FichierServices();
         ConfigServices configServices = new ConfigServices();
+        PressePapierWindowVM viewModel;
 
         System.Windows.Forms.NotifyIcon nIcon = new System.Windows.Forms.NotifyIcon();
 
@@ -54,6 +56,8 @@ namespace PressePapier.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+            viewModel = new PressePapierWindowVM(nIcon);
+            this.DataContext = viewModel;
             //InitTextes();
             InitDicKeysTB();
             InitControles();
@@ -80,7 +84,7 @@ namespace PressePapier.View
             dicKeysTB.Add(Key.D9, textBox9);
             dicKeysTB.Add(Key.D0, textBox10);
         }
-
+        
         private void InitControles()
         {
             this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;

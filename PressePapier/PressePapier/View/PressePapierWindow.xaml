@@ -15,10 +15,6 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
-    <Window.DataContext>
-        <viewmodel:PressePapierWindowVM/>
-    </Window.DataContext>
     
     <Grid Name="windowGrid">
         <Border BorderBrush="#FF084DB4" BorderThickness="2" Height="30" HorizontalAlignment="Left" Margin="0,519,0,0" Name="border1" VerticalAlignment="Top" Width="292" />

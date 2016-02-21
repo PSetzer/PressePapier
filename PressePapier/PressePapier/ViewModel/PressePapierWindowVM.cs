@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -179,6 +180,8 @@ namespace PressePapier.ViewModel
         {
             get { return new RelayCommand(ModifToucheRaccourci); }
         }
+
+        private readonly NotifyIcon _nIcon;
         #endregion properties
 
         private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
@@ -186,9 +189,10 @@ namespace PressePapier.ViewModel
         FichierServices fichierServices = new FichierServices();
         ConfigServices configServices = new ConfigServices();
 
-        public PressePapierWindowVM()
+        public PressePapierWindowVM(NotifyIcon nIcon)
         {
             InitProperties();
+            _nIcon = nIcon;
             InitDicKeysTextes();
             ModifToucheRaccourci("rbCtrl");
             ChargerTextes("btnRecharger");
@@ -230,7 +234,7 @@ namespace PressePapier.ViewModel
 
             string pName = dicKeysTextes[hotKey.Key];
             string text = (string)this.GetType().GetProperties().Single(p => p.Name == pName).GetValue(this);
-            Clipboard.SetDataObject(text);
+            System.Windows.Clipboard.SetDataObject(text);
             
             InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
         }
