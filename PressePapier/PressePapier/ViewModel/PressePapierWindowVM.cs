@@ -140,6 +140,17 @@ namespace PressePapier.ViewModel
             }
         }
 
+        private string _toolTipFichierEnCours;
+        public string ToolTipFichierEnCours
+        {
+            get { return _toolTipFichierEnCours; }
+            set
+            {
+                _toolTipFichierEnCours = value;
+                OnPropertyChanged("ToolTipFichierEnCours");
+            }
+        }
+
         private Visibility _lblNotifEnregVisibility;
         public Visibility LblNotifEnregVisibility
         {
@@ -192,15 +203,14 @@ namespace PressePapier.ViewModel
         {
             get { return new RelayCommand(ModifToucheRaccourci); }
         }
-
-        private readonly NotifyIcon _nIcon;
         #endregion properties
 
         private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
         List<HotKey> lstHotKeys = new List<HotKey>();
+        private readonly NotifyIcon _nIcon;
+        private bool blnShowTooltip = true;
         FichierServices fichierServices = new FichierServices();
         ConfigServices configServices = new ConfigServices();
-        private bool blnShowTooltip = true;
 
         public PressePapierWindowVM(NotifyIcon nIcon)
         {
@@ -280,13 +290,21 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private async Task NotifCopy()
+        public void ModifToucheRaccourci(string buttonName)
         {
-            _nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
-            AppIcon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
-            await Task.Delay(4000);
-            _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
-            AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+            foreach (HotKey hotKey in lstHotKeys)
+                hotKey.Unregister();
+            lstHotKeys.Clear();
+
+            KeyModifier keyModifier;
+            if (buttonName == "rbCtrl") keyModifier = KeyModifier.Ctrl;
+            else keyModifier = KeyModifier.Alt;
+
+            foreach (var key in dicKeysTextes.Keys)
+            {
+                lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandlerCopy));
+                lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandlerStore));
+            }
         }
 
         private void SauvegarderTextes(string buttonName)
@@ -304,17 +322,11 @@ namespace PressePapier.ViewModel
                 fichierServices.SauvegardeFichier(GetTextes(), pathFichier);
 
                 TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
+                ToolTipFichierEnCours = TextFichierEnCours;
                 configServices.SetDernierFichierOuvert(pathFichier);
 
                 NotifEnreg();
             }
-        }
-
-        private async Task NotifEnreg()
-        {
-            LblNotifEnregVisibility = Visibility.Visible;
-            await Task.Delay(4000);
-            LblNotifEnregVisibility = Visibility.Hidden;
         }
 
         private void ChargerTextes(string buttonName)
@@ -332,6 +344,7 @@ namespace PressePapier.ViewModel
                 SetTextes(fichierServices.ChargementFichier(pathFichier));
 
                 TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
+                ToolTipFichierEnCours = TextFichierEnCours;
                 configServices.SetDernierFichierOuvert(pathFichier);
             }
         }
@@ -343,7 +356,7 @@ namespace PressePapier.ViewModel
             foreach (string tb in dicKeysTextes.Values)
             {
                 string text = (string)this.GetType().GetProperties().Single(p => p.Name == tb).GetValue(this);
-                textes.Add(tb, text);
+                textes.Add(tb, text ?? "");
             }
 
             return textes;
@@ -366,23 +379,6 @@ namespace PressePapier.ViewModel
         {
             foreach (var p in this.GetType().GetProperties().Where(p => dicKeysTextes.Values.Contains(p.Name)))
                 p.SetValue(this, "");
-        }
-
-        public void ModifToucheRaccourci(string buttonName)
-        {
-            foreach (HotKey hotKey in lstHotKeys)
-                hotKey.Unregister();
-            lstHotKeys.Clear();
-
-            KeyModifier keyModifier;
-            if (buttonName == "rbCtrl") keyModifier = KeyModifier.Ctrl;
-            else keyModifier = KeyModifier.Alt;
-
-            foreach (var key in dicKeysTextes.Keys)
-            {
-                lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandlerCopy));
-                lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandlerStore));
-            }
         }
 
         public void GestionDisplayTooltip()
@@ -427,11 +423,29 @@ namespace PressePapier.ViewModel
             }
         }
 
+        #region traitements éphémères
+        private async Task NotifCopy()
+        {
+            _nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+            AppIcon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+            await Task.Delay(4000);
+            _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+        }
+
+        private async Task NotifEnreg()
+        {
+            LblNotifEnregVisibility = Visibility.Visible;
+            await Task.Delay(4000);
+            LblNotifEnregVisibility = Visibility.Hidden;
+        }
+
         private async Task DelayShowTooltip()
         {
             blnShowTooltip = false;
             await Task.Delay(4000);
             blnShowTooltip = true;
         }
+        #endregion traitements éphémères
     }
 }
