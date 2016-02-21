@@ -211,6 +211,7 @@ namespace PressePapier.ViewModel
         private bool blnShowTooltip = true;
         FichierServices fichierServices = new FichierServices();
         ConfigServices configServices = new ConfigServices();
+        KeyServices keyServices = new KeyServices();
 
         public PressePapierWindowVM(NotifyIcon nIcon)
         {
@@ -249,43 +250,18 @@ namespace PressePapier.ViewModel
 
         private void OnHotKeyHandlerCopy(HotKey hotKey)
         {
-            if (AppVisibility != Visibility.Visible)
-            {
-                //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent, sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
-                while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
-                {
-                    Thread.Sleep(100);
-                }
-            }
-
             string pName = dicKeysTextes[hotKey.Key];
             string text = (string)this.GetType().GetProperties().Single(p => p.Name == pName).GetValue(this);
-            System.Windows.Clipboard.SetDataObject(text);
-            
-            InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+            keyServices.TextCopy(AppVisibility, text);
         }
         
         private void OnHotKeyHandlerStore(HotKey hotKey)
         {
-            if (AppVisibility != Visibility.Visible)
-            {
-                //Ctrl, Alt et Shift doivent être relachées pour que les ModifiedKeyStroke fonctionnent, sinon la touche enfoncée lors de l'appel de cette fontion sera ajoutée au KeyModifier
-                while (InputSimulator.IsKeyDown(VirtualKeyCode.CONTROL) || InputSimulator.IsKeyDown(VirtualKeyCode.MENU) || InputSimulator.IsKeyDown(VirtualKeyCode.SHIFT))
-                {
-                    Thread.Sleep(100);
-                }
-            }
-
-            //les touches de raccourci de stockage doivent être maintenues un moment pour que ce mécanisme marche
-            InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
-            
-            string contenu = FichierUtils.GetClipBoardText();
-
+            string contenu = keyServices.TextStore(AppVisibility);
             if (contenu != "")
             {
                 string pName = dicKeysTextes[hotKey.Key];
                 this.GetType().GetProperties().Single(p => p.Name == pName).SetValue(this, contenu);
-
                 NotifCopy();
             }
         }
