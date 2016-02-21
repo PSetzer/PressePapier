@@ -89,13 +89,13 @@ namespace PressePapier.View
         {
             this.Height = svTextBox.Margin.Top + svTextBox.Height + 30;
             this.Width = stackPanel1.Margin.Left + stackPanel1.Width + 40;
-            this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+            //this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             maxSvHeight = System.Windows.SystemParameters.PrimaryScreenHeight - svTextBox.Margin.Top - 120;
 
             //rbCtrl.IsChecked = true;
             txtbFichierEnCours.MaxWidth = this.Width - txtbFichierEnCours.Margin.Left - (btnMinimiser.Margin.Right + btnMinimiser.Width);
 
-            nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            //nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
             nIcon.Click += new EventHandler(nIcon_Click);
 
             nIcon.BalloonTipClicked += new EventHandler(nIcon_Click);
@@ -437,12 +437,12 @@ namespace PressePapier.View
             timerNotifEnreg.Stop();
         }
 
-        private void timerNotifCopy_Tick(object sender, EventArgs e)
+        /*private void timerNotifCopy_Tick(object sender, EventArgs e)
         {
             nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
             this.Icon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             timerNotifCopy.Stop();
-        }
+        }*/
         #endregion
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WindowsInput;
@@ -161,6 +162,17 @@ namespace PressePapier.ViewModel
             }
         }
 
+        private ImageSource _appIcon;
+        public ImageSource AppIcon
+        {
+            get { return _appIcon; }
+            set
+            {
+                _appIcon = value;
+                OnPropertyChanged("AppIcon");
+            }
+        }
+
         public ICommand SauvegarderTextesCommand
         {
             get { return new RelayCommand(SauvegarderTextes); }
@@ -191,8 +203,8 @@ namespace PressePapier.ViewModel
 
         public PressePapierWindowVM(NotifyIcon nIcon)
         {
-            InitProperties();
             _nIcon = nIcon;
+            InitProperties();
             InitDicKeysTextes();
             ModifToucheRaccourci("rbCtrl");
             ChargerTextes("btnRecharger");
@@ -205,6 +217,8 @@ namespace PressePapier.ViewModel
 
             LblNotifEnregVisibility = Visibility.Hidden;
             AppVisibility = Visibility.Hidden;
+            AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+            _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
         }
 
         private void InitDicKeysTextes()
@@ -260,11 +274,17 @@ namespace PressePapier.ViewModel
                 string pName = dicKeysTextes[hotKey.Key];
                 this.GetType().GetProperties().Single(p => p.Name == pName).SetValue(this, contenu);
 
-                /*nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
-                this.Icon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
-                timerNotifCopy.Stop();
-                timerNotifCopy.Start();*/
+                NotifCopy();
             }
+        }
+
+        private async Task NotifCopy()
+        {
+            _nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
+            AppIcon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+            await Task.Delay(4000);
+            _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
         }
 
         private void SauvegarderTextes(string buttonName)
