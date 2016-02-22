@@ -18,7 +18,7 @@ namespace PressePapier.ViewModel
 {
     class PressePapierWindowVM : ObservableObject
     {
-        #region properties
+        #region bound properties
         private string _textTB1;
         public string TextTB1
         {
@@ -203,8 +203,9 @@ namespace PressePapier.ViewModel
         {
             get { return new RelayCommand(ModifToucheRaccourci); }
         }
-        #endregion properties
+        #endregion bound properties
 
+        #region initialisation
         private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
         List<HotKey> lstHotKeys = new List<HotKey>();
         private readonly NotifyIcon _nIcon;
@@ -247,7 +248,9 @@ namespace PressePapier.ViewModel
             dicKeysTextes.Add(Key.D9, "TextTB9");
             dicKeysTextes.Add(Key.D0, "TextTB10");
         }
+        #endregion initialisation
 
+        #region gestion keys
         private void OnHotKeyHandlerCopy(HotKey hotKey)
         {
             string pName = dicKeysTextes[hotKey.Key];
@@ -282,43 +285,42 @@ namespace PressePapier.ViewModel
                 lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandlerStore));
             }
         }
+        #endregion gestion keys
 
+        #region gestion textes
         private void SauvegarderTextes(string buttonName)
         {
             string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
-            string pathFichier = "";
+            string pathFichier;
 
             if (buttonName == "btnEnregistrer" && dernierFichierOuvert != "")
                 pathFichier = dernierFichierOuvert;
             else
                 pathFichier = FichierUtils.ChoixFichierAEnregistrer();
 
-            if (pathFichier != "")
-            {
-                fichierServices.SauvegardeFichier(GetTextes(), pathFichier);
-
-                TextFichierEnCours = TextUtils.GetNomFichier(pathFichier);
-                ToolTipFichierEnCours = TextFichierEnCours;
-                configServices.SetDernierFichierOuvert(pathFichier);
-
-                NotifEnreg();
-            }
+            fichierServices.SauvegardeFichier(GetTextes(), pathFichier);
+            SetFichierEnCours(pathFichier);
+            NotifEnreg();
         }
 
         private void ChargerTextes(string buttonName)
         {
             string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
-            string pathFichier = "";
+            string pathFichier;
 
             if ((buttonName == "btnRecharger" && dernierFichierOuvert != "") || buttonName == "appStart")
                 pathFichier = dernierFichierOuvert;
             else
                 pathFichier = FichierUtils.ChoixFichierACharger();
 
+            SetTextes(fichierServices.ChargementFichier(pathFichier));
+            SetFichierEnCours(pathFichier);
+        }
+
+        private void SetFichierEnCours(string pathFichier)
+        {
             if (pathFichier != "")
             {
-                SetTextes(fichierServices.ChargementFichier(pathFichier));
-
                 TextFichierEnCours = TextUtils.GetNomFichier(pathFichier);
                 ToolTipFichierEnCours = TextFichierEnCours;
                 configServices.SetDernierFichierOuvert(pathFichier);
@@ -366,6 +368,7 @@ namespace PressePapier.ViewModel
                 DelayShowTooltip();
             }
         }
+        #endregion gestion textes
 
         #region traitements éphémères
         private async Task NotifCopy()
