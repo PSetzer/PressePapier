@@ -219,7 +219,7 @@ namespace PressePapier.ViewModel
             InitProperties();
             InitDicKeysTextes();
             ModifToucheRaccourci("rbCtrl");
-            ChargerTextes("btnRecharger");
+            ChargerTextes("appStart");
             GestionDisplayTooltip();
         }
 
@@ -310,7 +310,7 @@ namespace PressePapier.ViewModel
             string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
             string pathFichier = "";
 
-            if (buttonName == "btnRecharger" && dernierFichierOuvert != "")
+            if ((buttonName == "btnRecharger" && dernierFichierOuvert != "") || buttonName == "appStart")
                 pathFichier = dernierFichierOuvert;
             else
                 pathFichier = FichierUtils.ChoixFichierACharger();
@@ -346,7 +346,7 @@ namespace PressePapier.ViewModel
                 foreach (string tb in dicKeysTextes.Values)
                 {
                     textes.TryGetValue(tb, out texteAInserer);
-                    this.GetType().GetProperties().Single(p => p.Name == tb).SetValue(this, texteAInserer);
+                    this.GetType().GetProperties().Single(p => p.Name == tb).SetValue(this, texteAInserer ?? "");
                 }
             }
         }
