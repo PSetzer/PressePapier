@@ -11,7 +11,7 @@ namespace PressePapier.Model
 {
     class KeyServices
     {
-        public void TextCopy(Visibility appVisibility, string text)
+        public void CopyTextToEditor(Visibility appVisibility, string text)
         {
             WaitForKeyRelease(appVisibility);
 
@@ -19,7 +19,7 @@ namespace PressePapier.Model
             InputSimulator.SimulateModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
         }
 
-        public string TextStore(Visibility appVisibility)
+        public string GetTextToStore(Visibility appVisibility)
         {
             WaitForKeyRelease(appVisibility);
 

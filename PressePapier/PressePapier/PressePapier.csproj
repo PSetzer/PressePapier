@@ -68,6 +68,7 @@
     <Compile Include="Model\ConfigServices.cs" />
     <Compile Include="Model\FichierUtils.cs" />
     <Compile Include="Model\KeyServices.cs" />
+    <Compile Include="Model\TextUtils.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <Compile Include="ViewModel\PressePapierWindowVM.cs" />
     <Page Include="View\PressePapierWindow.xaml">

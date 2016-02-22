@@ -252,12 +252,12 @@ namespace PressePapier.ViewModel
         {
             string pName = dicKeysTextes[hotKey.Key];
             string text = (string)this.GetType().GetProperties().Single(p => p.Name == pName).GetValue(this);
-            keyServices.TextCopy(AppVisibility, text);
+            keyServices.CopyTextToEditor(AppVisibility, text);
         }
         
         private void OnHotKeyHandlerStore(HotKey hotKey)
         {
-            string contenu = keyServices.TextStore(AppVisibility);
+            string contenu = keyServices.GetTextToStore(AppVisibility);
             if (contenu != "")
             {
                 string pName = dicKeysTextes[hotKey.Key];
@@ -297,7 +297,7 @@ namespace PressePapier.ViewModel
             {
                 fichierServices.SauvegardeFichier(GetTextes(), pathFichier);
 
-                TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
+                TextFichierEnCours = TextUtils.GetNomFichier(pathFichier);
                 ToolTipFichierEnCours = TextFichierEnCours;
                 configServices.SetDernierFichierOuvert(pathFichier);
 
@@ -319,7 +319,7 @@ namespace PressePapier.ViewModel
             {
                 SetTextes(fichierServices.ChargementFichier(pathFichier));
 
-                TextFichierEnCours = FichierUtils.GetNomFichier(pathFichier);
+                TextFichierEnCours = TextUtils.GetNomFichier(pathFichier);
                 ToolTipFichierEnCours = TextFichierEnCours;
                 configServices.SetDernierFichierOuvert(pathFichier);
             }
@@ -361,39 +361,7 @@ namespace PressePapier.ViewModel
         {
             if (blnShowTooltip)
             {
-                Dictionary<string, string> textes = GetTextes();
-                string tooltipText = "";
-                bool aucunTexte = true;
-
-                if (TextFichierEnCours != "")
-                {
-                    tooltipText = TextFichierEnCours + "\n";
-                    if (tooltipText.Length > 28)
-                    {
-                        tooltipText = tooltipText.Substring(0, 25) + "...\n";
-                    }
-                }
-
-                foreach (var text in textes)
-                {
-                    string numTextbox = text.Key.Substring(6);
-                    string premiereLigne = text.Value.Split('\n')[0];
-                    if (premiereLigne != "")
-                    {
-                        aucunTexte = false;
-                        if (premiereLigne.Length > 24)
-                        {
-                            premiereLigne = premiereLigne.Substring(0, 21) + "...";
-                        }
-                        tooltipText += numTextbox + " : " + premiereLigne + "\n";
-                    }
-                }
-
-                if (aucunTexte)
-                {
-                    tooltipText += "Aucun texte";
-                }
-
+                string tooltipText = TextUtils.GetTooltipText(TextFichierEnCours, GetTextes());
                 _nIcon.ShowBalloonTip(5000, "PressePapier", tooltipText, ToolTipIcon.None);
                 DelayShowTooltip();
             }
