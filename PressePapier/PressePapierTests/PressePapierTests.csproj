@@ -54,10 +54,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="GestionFichierTests.cs" />
-    <Compile Include="PressePapierWindowTests.cs" />
-    <Compile Include="UtilsTests.cs" />
+    <Compile Include="Model\ConfigServicesTests.cs" />
+    <Compile Include="Model\FichierServicesTests.cs" />
+    <Compile Include="Model\KeyServicesTests.cs" />
+    <Compile Include="Model\TextUtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PressePapierWindowVMTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PressePapier\PressePapier.csproj">
