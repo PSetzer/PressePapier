@@ -18,7 +18,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+
+    <d:DesignProperties.DataContext>
+        <viewmodel:DesignPressePapierWindow/>
+    </d:DesignProperties.DataContext>
+
     <Grid Name="windowGrid">
         <Border BorderBrush="#FF084DB4" BorderThickness="2" Height="30" HorizontalAlignment="Left" Margin="0,519,0,0" Name="border1" VerticalAlignment="Top" Width="292" />
         <Button Name="btnEnregistrer" Command="{Binding SauvegarderTextesCommand}" CommandParameter="btnEnregistrer" Style="{StaticResource BoutonAction}" Height="50" Margin="59,66,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" HorizontalAlignment="Left" Width="97" Background="#FF084DB4" Content="Enregistrer"></Button>
