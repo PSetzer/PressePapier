@@ -3,6 +3,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 // Les informations générales relatives à un assembly dépendent de 
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
@@ -20,6 +21,9 @@ using System.Windows;
 // aux composants COM.  Si vous devez accéder à un type dans cet assembly à partir de 
 // COM, affectez la valeur true à l'attribut ComVisible sur ce type.
 [assembly: ComVisible(false)]
+
+//les classes internal de cette assembly doivent être visibles par le projet de tests
+[assembly:InternalsVisibleTo("PressePapierTests")]
 
 //Pour commencer à générer des applications localisables, définissez 
 //<UICulture>CultureYouAreCodingWith</UICulture> dans votre fichier .csproj
