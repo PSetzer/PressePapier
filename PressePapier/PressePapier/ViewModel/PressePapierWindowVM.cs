@@ -201,13 +201,13 @@ namespace PressePapier.ViewModel
         #endregion bound properties
 
         #region initialisation
-        private Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
-        List<HotKey> lstHotKeys = new List<HotKey>();
-        private readonly NotifyIcon _nIcon;
-        private bool blnShowTooltip = true;
-        FichierServices fichierServices = new FichierServices();
-        ConfigServices configServices = new ConfigServices();
-        KeyServices keyServices = new KeyServices();
+        internal Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
+        internal List<HotKey> lstHotKeys = new List<HotKey>();
+        internal readonly NotifyIcon _nIcon;
+        internal bool blnShowTooltip = true;
+        internal FichierServices fichierServices = new FichierServices();
+        internal ConfigServices configServices = new ConfigServices();
+        internal KeyServices keyServices = new KeyServices();
 
         public PressePapierWindowVM(NotifyIcon nIcon)
         {
@@ -221,7 +221,7 @@ namespace PressePapier.ViewModel
 
         private void InitProperties()
         {
-            foreach (var p in this.GetType().GetProperties().Where(p => p.GetType() == typeof(string)))
+            foreach (var p in this.GetType().GetProperties().Where(p => p.PropertyType == typeof(string)))
                 p.SetValue(this, "");
 
             LblNotifEnregVisibility = Visibility.Hidden;
@@ -283,7 +283,7 @@ namespace PressePapier.ViewModel
         #endregion gestion keys
 
         #region gestion textes
-        private void SauvegarderTextes(string buttonName)
+        internal void SauvegarderTextes(string buttonName)
         {
             string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
             string pathFichier;
@@ -298,7 +298,7 @@ namespace PressePapier.ViewModel
             NotifEnreg();
         }
 
-        private void ChargerTextes(string buttonName)
+        internal void ChargerTextes(string buttonName)
         {
             string dernierFichierOuvert = configServices.GetDernierFichierOuvert();
             string pathFichier;
@@ -312,7 +312,7 @@ namespace PressePapier.ViewModel
             SetFichierEnCours(pathFichier);
         }
 
-        private void SetFichierEnCours(string pathFichier)
+        internal void SetFichierEnCours(string pathFichier)
         {
             if (pathFichier != "")
             {
@@ -322,7 +322,7 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private Dictionary<string, string> GetTextes()
+        internal Dictionary<string, string> GetTextes()
         {
             var textes = new Dictionary<string, string>();
 
@@ -335,7 +335,7 @@ namespace PressePapier.ViewModel
             return textes;
         }
 
-        private void SetTextes(Dictionary<string, string> textes)
+        internal void SetTextes(Dictionary<string, string> textes)
         {
             if (textes.Count > 0)
             {
@@ -348,7 +348,7 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private void EffacerTextes()
+        internal void EffacerTextes()
         {
             foreach (var p in this.GetType().GetProperties().Where(p => dicKeysTextes.Values.Contains(p.Name)))
                 p.SetValue(this, "");
