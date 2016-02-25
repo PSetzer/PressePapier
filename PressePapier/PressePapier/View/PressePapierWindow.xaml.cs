@@ -1,9 +1,11 @@
-﻿using PressePapier.ViewModel;
+﻿using Microsoft.Win32;
+using PressePapier.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Linq;
 
 namespace PressePapier.View
 {
@@ -54,8 +56,8 @@ namespace PressePapier.View
         #region gestion taille et position éléments
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            /*//hauteur de la textbox et de son stackpanel
-            TextBox tbChanged = sender as TextBox;
+            //hauteur de la textbox et de son stackpanel
+            System.Windows.Controls.TextBox tbChanged = sender as System.Windows.Controls.TextBox;
             StackPanel spChanged = tbChanged.Parent as StackPanel;
             int lineHeight = initialLineHeight + ((tbChanged.LineCount - 1) * addLineHeight);
             double initialTbHeight = tbChanged.Height;
@@ -98,13 +100,13 @@ namespace PressePapier.View
                 }
             }
 
-            foreach (Label lblMove in grdTextBox.Children.OfType<Label>())
+            foreach (System.Windows.Controls.Label lblMove in grdTextBox.Children.OfType<System.Windows.Controls.Label>())
             {
                 if (lblMove.Margin.Top > spChanged.Margin.Top)
                 {
                     lblMove.Margin = new Thickness(lblMove.Margin.Left, lblMove.Margin.Top + diffTbHeight, lblMove.Margin.Right, lblMove.Margin.Bottom);
                 }
-            }*/
+            }
         }
         #endregion gestion taille et position éléments
 
