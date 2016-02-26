@@ -83,7 +83,7 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-        <TextBlock Name="txtbFichierEnCours" Text="{Binding TextFichierEnCours}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="{Binding ToolTipFichierEnCours}"/>
+        <TextBlock Name="txtbFichierEnCours" Text="{Binding TextFichierEnCours}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
         <Label x:Name="lblNotifEnreg" Visibility="{Binding LblNotifEnregVisibility}" Content="Enregistrement effectué" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="155" FontFamily="Trebuchet MS" FontSize="13"/>
     </Grid>
 </Window>

@@ -135,17 +135,6 @@ namespace PressePapier.ViewModel
             }
         }
 
-        private string _toolTipFichierEnCours;
-        public string ToolTipFichierEnCours
-        {
-            get { return _toolTipFichierEnCours; }
-            set
-            {
-                _toolTipFichierEnCours = value;
-                OnPropertyChanged("ToolTipFichierEnCours");
-            }
-        }
-
         private Visibility _lblNotifEnregVisibility;
         public Visibility LblNotifEnregVisibility
         {
@@ -317,7 +306,6 @@ namespace PressePapier.ViewModel
             if (pathFichier != "")
             {
                 TextFichierEnCours = TextUtils.GetNomFichier(pathFichier);
-                ToolTipFichierEnCours = TextFichierEnCours;
                 configServices.SetDernierFichierOuvert(pathFichier);
             }
         }
