@@ -127,13 +127,6 @@ namespace PressePapier.View
             DragMove();
         }
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            border1.Margin = new Thickness(0);
-            border1.Width = e.NewSize.Width;
-            border1.Height = e.NewSize.Height;
-        }
-
         private void Window_Deactivated(object sender, EventArgs e)
         {
             this.Hide();

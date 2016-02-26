@@ -5,7 +5,7 @@
         Title="PressePapier" Visibility="{Binding AppVisibility, Mode=TwoWay}" Icon="{Binding AppIcon, Mode=TwoWay}" WindowStyle="None" BorderThickness="0"
         AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="598" Width="418"
-        Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Name="PressePapier" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated">
+        Loaded="Window_Loaded" Name="PressePapier" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -24,7 +24,7 @@
     </d:DesignProperties.DataContext>
 
     <Grid Name="windowGrid">
-        <Border BorderBrush="#FF084DB4" BorderThickness="2" Height="30" HorizontalAlignment="Left" Margin="0,519,0,0" Name="border1" VerticalAlignment="Top" Width="292" />
+        <Border BorderBrush="#FF084DB4" BorderThickness="2" Height="{Binding ActualHeight, ElementName=PressePapier}" HorizontalAlignment="Left" Margin="0,0,0,0" x:Name="border1" VerticalAlignment="Top" Width="{Binding ActualWidth, ElementName=PressePapier}" />
         <Button Name="btnEnregistrer" Command="{Binding SauvegarderTextesCommand}" CommandParameter="btnEnregistrer" Style="{StaticResource BoutonAction}" Height="50" Margin="59,66,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" HorizontalAlignment="Left" Width="97" Background="#FF084DB4" Content="Enregistrer"></Button>
         <Button Name="btnCharger" Command="{Binding ChargerTextesCommand}" CommandParameter="btnCharger" Style="{StaticResource BoutonAction}" Height="50" Margin="262,66,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="14" FontStretch="Normal" BorderBrush="White" Foreground="White" HorizontalAlignment="Left" Width="97" Background="#FF084DB4" Content="Charger"></Button>
         <Button Name="btnRecharger" Command="{Binding ChargerTextesCommand}" CommandParameter="btnRecharger" Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="262,119,0,0" VerticalAlignment="Top" Width="97" Background="#FF084DB4" Content="Recharger"></Button>
