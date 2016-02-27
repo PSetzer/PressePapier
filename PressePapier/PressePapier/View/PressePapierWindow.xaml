@@ -4,8 +4,8 @@
         xmlns:viewmodel="clr-namespace:PressePapier.ViewModel"
         Title="PressePapier" Visibility="{Binding AppVisibility, Mode=TwoWay}" Icon="{Binding AppIcon, Mode=TwoWay}" WindowStyle="None" BorderThickness="0"
         AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="598" Width="418"
-        Loaded="Window_Loaded" Name="PressePapier" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="Auto" Width="389"
+        SizeToContent="Height" Loaded="Window_Loaded" Name="PressePapier" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -39,51 +39,64 @@
             <RadioButton Name="rbCtrl" Command="{Binding ModifToucheRaccourciCommand}" CommandParameter="rbCtrl" IsChecked="True" Style="{StaticResource ModifRadioButton}" Content="Ctrl" Height="20" Width="40" Margin="8,25,0,0" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <Label Content="Modifieur" Height="28" HorizontalAlignment="Left" Margin="13,1,0,0" Name="lblModif" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="White" />
         </Grid>
-        <ScrollViewer Style="{DynamicResource ScrollViewerGrd}" Height="335" HorizontalAlignment="Left" Margin="2,203,0,0" Name="svTextBox" VerticalAlignment="Top" Width="394" VerticalScrollBarVisibility="Auto">
-            <Grid Height="335" Name="grdTextBox" Width="394" VerticalAlignment="Top" >
-                <Label Content="1" Height="28" HorizontalAlignment="Left" Margin="31,-6,0,0" Name="label1" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="2" Height="28" HorizontalAlignment="Left" Margin="31,29,0,0" Name="label2" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="3" Height="28" HorizontalAlignment="Left" Margin="31,64,0,0" Name="label3" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="4" Height="28" HorizontalAlignment="Left" Margin="31,99,0,0" Name="label4" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="5" HorizontalAlignment="Left" Margin="31,134,0,0" Name="label5" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" Height="28" VerticalAlignment="Top" />
-                <Label Content="6" Height="28" HorizontalAlignment="Left" Margin="31,169,0,0" Name="label6" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="7" Height="28" HorizontalAlignment="Left" Margin="31,204,0,0" Name="label7" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="8" Height="28" HorizontalAlignment="Left" Margin="31,239,0,0" Name="label8" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="9" Height="28" HorizontalAlignment="Left" Margin="31,274,0,0" Name="label9" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <Label Content="10" Height="28" HorizontalAlignment="Left" Margin="21,309,0,0" Name="label10" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
-                <StackPanel Height="20" HorizontalAlignment="Left" Margin="59,0,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="300">
-                    <TextBox Text="{Binding TextTB1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CopyPasteTextbox}" AcceptsReturn="True" Name="textBox1" VerticalScrollBarVisibility="Auto" Width="300" Height="20" TextWrapping="Wrap" FontSize="13" TextChanged="textBox_TextChanged" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel2" Width="300" Margin="59,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox2" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel3" Width="300" Margin="59,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox3" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel4" Width="300" Margin="59,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox4" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel5" Width="300" Margin="59,140,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox5" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel6" Width="300" Margin="59,175,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox6" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel7" Width="300" Margin="59,210,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB7, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox7" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel8" Width="300" Margin="59,245,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB8, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox8" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel9" Width="300" Margin="59,280,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB9, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox9" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
-                <StackPanel Height="20" Name="stackPanel10" Width="300" Margin="59,315,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBox Text="{Binding TextTB10, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="20" Name="textBox10" Style="{StaticResource CopyPasteTextbox}" TextChanged="textBox_TextChanged" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" />
-                </StackPanel>
+        <ScrollViewer Style="{DynamicResource ScrollViewerGrd}" Height="Auto" HorizontalAlignment="Left" Margin="2,203,0,27" Name="svTextBox" VerticalAlignment="Top" Width="380" VerticalScrollBarVisibility="Auto">
+            <Grid Height="Auto" Name="grdTextBox" Width="395" VerticalAlignment="Top" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <DockPanel Height="Auto" Grid.Row="0" >
+                    <Label DockPanel.Dock="Left" Content="1" Height="28" Margin="21,-5,0,10" Name="label1" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CopyPasteTextbox}" AcceptsReturn="True" Name="textBox1" VerticalScrollBarVisibility="Auto" Width="300" Height="Auto" TextWrapping="Wrap" FontSize="13" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="1" >
+                    <Label DockPanel.Dock="Left" Content="2" Height="28" Margin="21,-5,0,10" Name="label2" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox2" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="2" >
+                    <Label DockPanel.Dock="Left" Content="3" Height="28" Margin="21,-5,0,10" Name="label3" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox3" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="3" >
+                    <Label DockPanel.Dock="Left" Content="4" Height="28" Margin="21,-5,0,10" Name="label4" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox4" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="4" >
+                    <Label DockPanel.Dock="Left" Content="5" Margin="21,-5,0,10" Name="label5" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" Height="28" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox5" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="5" >
+                    <Label DockPanel.Dock="Left" Content="6" Height="28" Margin="21,-5,0,10" Name="label6" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB6, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox6" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="6" >
+                    <Label DockPanel.Dock="Left" Content="7" Height="28" Margin="21,-5,0,10" Name="label7" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB7, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox7" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="7" >
+                    <Label DockPanel.Dock="Left" Content="8" Height="28" Margin="21,-5,0,10" Name="label8" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB8, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox8" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="8" >
+                    <Label DockPanel.Dock="Left" Content="9" Height="28" Margin="21,-5,0,10" Name="label9" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB9, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox9" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,12" />
+                </DockPanel>
+                <DockPanel Height="Auto" Grid.Row="9" >
+                    <Label DockPanel.Dock="Left" Content="10" Height="28" Margin="11,-5,0,0" Name="label10" FontFamily="Trebuchet MS" FontSize="18" FontWeight="Bold" />
+                    <TextBox DockPanel.Dock="Top" Text="{Binding TextTB10, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" FontSize="13" Height="Auto" Name="textBox10" Style="{StaticResource CopyPasteTextbox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="300" MaxHeight="208" Margin="-22,0,0,2" />
+                </DockPanel>
             </Grid>
         </ScrollViewer>
-        <TextBlock Name="txtbFichierEnCours" Text="{Binding TextFichierEnCours}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+        <TextBlock Name="txtbFichierEnCours" Text="{Binding TextFichierEnCours}" MaxWidth="326" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="15,15,0,0" VerticalAlignment="Top" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
         <Label x:Name="lblNotifEnreg" Visibility="{Binding LblNotifEnregVisibility}" Content="Enregistrement effectué" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="155" FontFamily="Trebuchet MS" FontSize="13"/>
     </Grid>
 </Window>
