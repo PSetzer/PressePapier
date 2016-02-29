@@ -217,7 +217,6 @@ namespace PressePapier.ViewModel
             AppVisibility = Visibility.Hidden;
             AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
             _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
-            _nIcon.Visible = true;
         }
 
         private void InitDicKeysTextes()
