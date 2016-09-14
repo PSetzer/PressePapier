@@ -10,11 +10,11 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="../Resources/ScrollViewerStyle.xaml"/>
-                <ResourceDictionary Source="../Resources/TextBoxStyle.xaml"/>
-                <ResourceDictionary Source="../Resources/RadioButtonStyle.xaml"/>
-                <ResourceDictionary Source="../Resources/Brushes.xaml"/>
+                <ResourceDictionary Source="/Resources/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Resources/ScrollViewerStyle.xaml"/>
+                <ResourceDictionary Source="/Resources/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Resources/RadioButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Resources/Brushes.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -72,7 +72,7 @@
             <Button Grid.Column="2" Grid.Row="2" Margin="3,0,0,0" Name="btnRecharger" Command="{Binding ChargerTextesCommand}" CommandParameter="btnRecharger"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource BoutonAction}" BorderBrush="White" FontFamily="Trebuchet MS" FontSize="14" FontStretch="Normal" FontWeight="Bold" Foreground="White" Height="50" Width="97" Background="#FF084DB4" Content="Recharger"></Button>
         </Grid>
 
-        <ScrollViewer Grid.Row="2" Style="{DynamicResource ScrollViewerGrd}" Height="Auto" HorizontalAlignment="Left" Margin="0,22,0,27" Name="svTextBox" VerticalAlignment="Top" Width="380" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="2" Style="{StaticResource ScrollViewerGrd}" Height="Auto" HorizontalAlignment="Left" Margin="0,22,0,27" Name="svTextBox" VerticalAlignment="Top" Width="380" VerticalScrollBarVisibility="Auto">
             <Grid Height="Auto" Name="grdTextBox" Width="395" VerticalAlignment="Top" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

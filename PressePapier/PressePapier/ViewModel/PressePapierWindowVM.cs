@@ -192,6 +192,10 @@ namespace PressePapier.ViewModel
         #region initialisation
         internal Dictionary<Key, string> dicKeysTextes = new Dictionary<Key, string>();
         internal List<HotKey> lstHotKeys = new List<HotKey>();
+        private BitmapImage ClipBoardImage;
+        private BitmapImage ClipBoardActivityImage;
+        private System.Drawing.Icon ClipBoardIcon;
+        private System.Drawing.Icon ClipBoardActivityIcon;
         internal readonly NotifyIcon _nIcon;
         internal bool blnShowTooltip = true;
         internal FichierServices fichierServices = new FichierServices();
@@ -201,11 +205,20 @@ namespace PressePapier.ViewModel
         public PressePapierWindowVM(NotifyIcon nIcon)
         {
             _nIcon = nIcon;
+            InitImages();
             InitProperties();
             InitDicKeysTextes();
             ModifToucheRaccourci("rbCtrl");
             ChargerTextes("appStart");
             GestionDisplayTooltip();
+        }
+
+        private void InitImages()
+        {
+            ClipBoardImage = (BitmapImage)System.Windows.Application.Current.FindResource("ClipBoardIcon");
+            ClipBoardActivityImage = (BitmapImage)System.Windows.Application.Current.FindResource("ClipBoardActivityIcon");
+            ClipBoardIcon = new System.Drawing.Icon("ClipBoard.ico");
+            ClipBoardActivityIcon = new System.Drawing.Icon("ClipBoardActivity.ico");            
         }
 
         private void InitProperties()
@@ -215,8 +228,8 @@ namespace PressePapier.ViewModel
 
             LblNotifEnregVisibility = Visibility.Hidden;
             AppVisibility = Visibility.Hidden;
-            AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
-            _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
+            AppIcon = ClipBoardImage;
+            _nIcon.Icon = ClipBoardIcon;
         }
 
         private void InitDicKeysTextes()
@@ -356,11 +369,11 @@ namespace PressePapier.ViewModel
         #region traitements éphémères
         private async Task NotifCopy()
         {
-            _nIcon.Icon = new System.Drawing.Icon("ClipBoardActivity.ico");
-            AppIcon = BitmapFrame.Create(new Uri("ClipBoardActivity.ico", UriKind.Relative));
+            _nIcon.Icon = ClipBoardActivityIcon;
+            AppIcon = ClipBoardActivityImage;
             await Task.Delay(4000);
-            _nIcon.Icon = new System.Drawing.Icon("ClipBoard.ico");
-            AppIcon = BitmapFrame.Create(new Uri("ClipBoard.ico", UriKind.Relative));
+            _nIcon.Icon = ClipBoardIcon;
+            AppIcon = ClipBoardImage;
         }
 
         private async Task NotifEnreg()

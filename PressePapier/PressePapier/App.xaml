@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PressePapier.View"
              StartupUri="View\PressePapierWindow.xaml">
     <Application.Resources>
-         
+        <BitmapImage x:Key="ClipBoardIcon" UriSource="/Resources/ClipBoard.ico"/>
+        <BitmapImage x:Key="ClipBoardActivityIcon" UriSource="/Resources/ClipBoardActivity.ico"/>
     </Application.Resources>
 </Application>
