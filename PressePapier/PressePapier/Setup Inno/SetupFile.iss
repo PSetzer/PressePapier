@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PressePapier"
-#define MyAppVersion "2.2"
+#define MyAppVersion "2.3"
 #define MyAppPublisher "P. Setzer"
 #define MyAppExeName "PressePapier.exe"
 
@@ -20,22 +20,18 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputDir=C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\Setup Inno
 OutputBaseFilename=PressePapierSetup
-SetupIconFile=C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\ClipBoard.ico
+SetupIconFile=C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\View\ClipBoard.ico
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
-
-[Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
 Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\bin\Release\PressePapier.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\ClipBoard.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\ClipBoardActivity.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\View\ClipBoard.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\View\ClipBoardActivity.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\InputSimulator.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

@@ -198,7 +198,7 @@ namespace PressePapier.ViewModel
         private System.Drawing.Icon ClipBoardActivityIcon;
         internal readonly NotifyIcon _nIcon;
         internal bool blnShowTooltip = false;
-        internal bool isWaitingForShowTooltip = false;
+        internal bool isWaitingBeforeShowTooltip = false;
         internal FichierServices fichierServices = new FichierServices();
         internal ConfigServices configServices = new ConfigServices();
         internal KeyServices keyServices = new KeyServices();
@@ -358,14 +358,14 @@ namespace PressePapier.ViewModel
 
         public void GestionDisplayTooltip(bool isChargement = false)
         {
-            if (!isWaitingForShowTooltip)
-                WaitForShowTooltip();               
+            if (!isWaitingBeforeShowTooltip)
+                WaitBeforeShowTooltip();               
 
             if (blnShowTooltip || isChargement)
             {
                 string tooltipText = TextUtils.GetTooltipText(TextFichierEnCours, GetTextes());
                 _nIcon.ShowBalloonTip(5000, "PressePapier", tooltipText, ToolTipIcon.None);               
-                DelayShowTooltip();
+                WaitAfterShowTooltip();
             }
         }
         #endregion gestion textes
@@ -387,21 +387,21 @@ namespace PressePapier.ViewModel
             LblNotifEnregVisibility = Visibility.Hidden;
         }
 
-        private async Task DelayShowTooltip()
+        private async Task WaitBeforeShowTooltip()
+        {
+            blnShowTooltip = false;
+            await Task.Delay(400);
+            blnShowTooltip = true;
+            isWaitingBeforeShowTooltip = true;
+        }
+
+        private async Task WaitAfterShowTooltip()
         {
             blnShowTooltip = false;
             await Task.Delay(4000);
             blnShowTooltip = true;
-            isWaitingForShowTooltip = false;
-        }
-
-        private async Task WaitForShowTooltip()
-        {            
-            blnShowTooltip = false;
-            await Task.Delay(400);
-            blnShowTooltip = true;
-            isWaitingForShowTooltip = true;
-        }
+            isWaitingBeforeShowTooltip = false;
+        }       
         #endregion traitements éphémères
     }
 }
