@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PressePapier.ViewModel;
 using System.Windows.Forms;
-using PressePapier.Model;
+using OuelletKeyHandler;
 
 namespace PressePapierTests.ViewModel
 {

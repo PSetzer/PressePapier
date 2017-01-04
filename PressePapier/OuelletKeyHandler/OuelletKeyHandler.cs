@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace PressePapier.Model
+namespace OuelletKeyHandler
 {
     public class HotKey : IDisposable
     {
