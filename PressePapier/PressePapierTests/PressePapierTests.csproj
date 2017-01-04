@@ -62,6 +62,10 @@
     <Compile Include="ViewModel\PressePapierWindowVMTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OuelletKeyHandler\OuelletKeyHandler.csproj">
+      <Project>{2b71ad03-8887-4057-9b8e-f39205ab0341}</Project>
+      <Name>OuelletKeyHandler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PressePapier\PressePapier.csproj">
       <Project>{1324657e-8391-4a87-9167-40191cd16af7}</Project>
       <Name>PressePapier</Name>

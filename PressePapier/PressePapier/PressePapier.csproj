@@ -109,7 +109,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\OuelletKeyHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +142,12 @@
     <Resource Include="Resources\ClipBoardActivity.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OuelletKeyHandler\OuelletKeyHandler.csproj">
+      <Project>{2b71ad03-8887-4057-9b8e-f39205ab0341}</Project>
+      <Name>OuelletKeyHandler</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
