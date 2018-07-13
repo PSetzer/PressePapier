@@ -296,6 +296,11 @@ namespace PressePapier.ViewModel
             }
         }
 
+        private void OnHotKeyShowWindow(HotKey hotKey)
+        {
+            AppVisibility = AppVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+        }
+
         public void ModifToucheRaccourci(string buttonName)
         {
             foreach (HotKey hotKey in lstHotKeys)
@@ -311,6 +316,8 @@ namespace PressePapier.ViewModel
                 lstHotKeys.Add(new HotKey(key, keyModifier, OnHotKeyHandlerCopy));
                 lstHotKeys.Add(new HotKey(key, keyModifier | KeyModifier.Shift, OnHotKeyHandlerStore));
             }
+
+            lstHotKeys.Add(new HotKey(Key.Oem7, keyModifier, OnHotKeyShowWindow));
         }
         #endregion gestion keys
 
