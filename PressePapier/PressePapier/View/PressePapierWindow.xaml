@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewmodel="clr-namespace:PressePapier.ViewModel"
         Title="PressePapier" Visibility="{Binding AppVisibility, Mode=TwoWay}" Icon="{Binding AppIcon, Mode=TwoWay}" WindowStyle="None" Name="PressePapier"
-        AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d"
+        AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" WindowState="{Binding AppWindowState, Mode=TwoWay}" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="Auto" Width="390"
-        SizeToContent="Height" Loaded="Window_Loaded" StateChanged="Window_StateChanged" Deactivated="Window_Deactivated" BorderBrush="#FF084DB4" BorderThickness="2">
+        SizeToContent="Height" Loaded="Window_Loaded" Deactivated="Window_Deactivated" BorderBrush="#FF084DB4" BorderThickness="2">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -43,7 +43,7 @@
             
             <TextBlock Grid.Column="0" Grid.Row="0" Margin="15,12,0,0" Name="txtbFichierEnCours" Text="{Binding TextFichierEnCours}" HorizontalAlignment="Left" MaxWidth="326" TextTrimming="CharacterEllipsis" FontFamily="Trebuchet MS" FontSize="14" FontWeight="Bold" Foreground="Black" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
             <Label Grid.Column="0" Grid.Row="1"  Margin="10,-7,0,0" Name="lblNotifEnreg" Visibility="{Binding LblNotifEnregVisibility}" Content="Enregistrement effectué" FontFamily="Trebuchet MS" FontSize="13"/>
-            <Button Grid.Column="1" Grid.Row="0" Name="btnMinimiser" Style="{StaticResource BoutonToolBox}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-3,0,0" Content="_" Height="36" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" Foreground="#FF0066CC" FontFamily="Trebuchet MS" FontSize="22" FontWeight="Bold" Click="btnMinimiser_Click" BorderThickness="0" Width="19" />
+            <Button Grid.Column="1" Grid.Row="0" Name="btnMinimiser" Style="{StaticResource BoutonToolBox}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-3,0,0" Content="_" Height="36" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" Foreground="#FF0066CC" FontFamily="Trebuchet MS" FontSize="22" FontWeight="Bold" Command="{Binding MinimizeWindowCommand}" BorderThickness="0" Width="19" />
             <Button Grid.Column="2" Grid.Row="0" Name="btnFermer" Style="{StaticResource BoutonToolBox}"  HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0,0,8,0" Content="x" Height="33" Width="22" FontFamily="Trebuchet MS" FontSize="22" FontWeight="Bold" Background="#FFF0F0F0" BorderBrush="#FFF0F0F0" Foreground="#FF0066CC" Click="btnFermer_Click"/>
         </Grid>
 

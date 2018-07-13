@@ -42,11 +42,6 @@ namespace PressePapier.View
         #endregion initialisation
 
         #region évènements Fenêtre
-        private void btnMinimiser_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
         private void btnFermer_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -62,15 +57,6 @@ namespace PressePapier.View
         {
             this.Hide();
             nIcon.Visible = true;
-        }
-
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            if (this.WindowState == WindowState.Minimized)
-            {
-                this.Hide();
-                nIcon.Visible = true;
-            }
         }
         #endregion évènements Fenêtre
 

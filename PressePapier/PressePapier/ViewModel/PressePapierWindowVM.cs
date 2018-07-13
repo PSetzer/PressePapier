@@ -154,7 +154,26 @@ namespace PressePapier.ViewModel
             set
             {
                 _appVisibility = value;
+                if (value == Visibility.Hidden)
+                    _nIcon.Visible = true;
+                else if (value == Visibility.Visible)
+                    _nIcon.Visible = false;
                 OnPropertyChanged("AppVisibility");
+            }
+        }
+
+        private WindowState _appWindowState;
+        public WindowState AppWindowState
+        {
+            get { return _appWindowState; }
+            set
+            {
+                _appWindowState = value;
+                if (value == WindowState.Minimized)
+                    _nIcon.Visible = true;
+                else if (value == WindowState.Normal)
+                    _nIcon.Visible = false;
+                OnPropertyChanged("AppWindowState");
             }
         }
 
@@ -187,6 +206,11 @@ namespace PressePapier.ViewModel
         public ICommand ModifToucheRaccourciCommand
         {
             get { return new RelayCommand(ModifToucheRaccourci); }
+        }
+
+        public ICommand MinimizeWindowCommand
+        {
+            get { return new RelayCommand(MinimizeWindow); }
         }
         #endregion bound properties
 
@@ -246,9 +270,14 @@ namespace PressePapier.ViewModel
             dicKeysTextes.Add(Key.D9, "TextTB9");
             dicKeysTextes.Add(Key.D0, "TextTB10");
         }
+
+        public void MinimizeWindow()
+        {
+            AppWindowState = WindowState.Minimized;
+        }
         #endregion initialisation
 
-        #region gestion keys
+            #region gestion keys
         private void OnHotKeyHandlerCopy(HotKey hotKey)
         {
             string pName = dicKeysTextes[hotKey.Key];
