@@ -253,6 +253,7 @@ namespace PressePapier.ViewModel
 
             LblNotifEnregVisibility = Visibility.Hidden;
             AppVisibility = Visibility.Hidden;
+            AppWindowState = WindowState.Minimized;
             AppIcon = ClipBoardImage;
             _nIcon.Icon = ClipBoardIcon;
         }

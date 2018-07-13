@@ -16,15 +16,16 @@ namespace PressePapier.View
     {
         #region initialisation
         PressePapierWindowVM viewModel;
-        NotifyIcon nIcon = new NotifyIcon();
+        NotifyIcon nIcon;
 
         public PressePapierWindow()
         {
             InitializeComponent();
+            nIcon = new NotifyIcon();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        {   
             InitIcon();
             int topSvTextbox = int.Parse(windowGrid.RowDefinitions[0].Height.ToString()) + int.Parse(windowGrid.RowDefinitions[1].Height.ToString());
             svTextBox.MaxHeight = SystemParameters.PrimaryScreenHeight * 0.9 - topSvTextbox;
@@ -37,7 +38,6 @@ namespace PressePapier.View
             nIcon.Click += new EventHandler(nIcon_Click);
             nIcon.BalloonTipClicked += new EventHandler(nIcon_Click);
             nIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(nIcon_MouseMove);
-            nIcon.Visible = true;
         }
         #endregion initialisation
 
