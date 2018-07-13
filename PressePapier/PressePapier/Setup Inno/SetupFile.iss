@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PressePapier"
-#define MyAppVersion "2.3"
+#define MyAppVersion "2.4"
 #define MyAppPublisher "P. Setzer"
 #define MyAppExeName "PressePapier.exe"
 
@@ -18,9 +18,9 @@ AppPublisher={#MyAppPublisher}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-OutputDir=C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\Setup Inno
+OutputDir=C:\Dev\Repos\PressePapier\PressePapier\PressePapier\Setup Inno
 OutputBaseFilename=PressePapierSetup
-SetupIconFile=C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\View\ClipBoard.ico
+SetupIconFile=C:\Dev\Repos\PressePapier\PressePapier\PressePapier\Resources\ClipBoard.ico
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
@@ -29,11 +29,11 @@ PrivilegesRequired=admin
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\bin\Release\PressePapier.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\View\ClipBoard.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\View\ClipBoardActivity.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\PressePapier\InputSimulator.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Paul\DevVSO\PressePapier\PressePapier\OuelletKeyHandler\bin\Release\OuelletKeyHandler.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Dev\Repos\PressePapier\PressePapier\PressePapier\bin\Release\PressePapier.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Dev\Repos\PressePapier\PressePapier\PressePapier\View\ClipBoard.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Dev\Repos\PressePapier\PressePapier\PressePapier\View\ClipBoardActivity.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Dev\Repos\PressePapier\PressePapier\PressePapier\InputSimulator.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Dev\Repos\PressePapier\PressePapier\OuelletKeyHandler\bin\Release\OuelletKeyHandler.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
