@@ -37,42 +37,5 @@ namespace PressePapier.Model
 
             return nomFichier;
         }
-
-        public static string GetTooltipText(string textFichierEnCours, Dictionary<string, string> textes)
-        {
-            string tooltipText = "";
-            bool aucunTexte = true;
-
-            if (textFichierEnCours != "")
-            {
-                tooltipText = textFichierEnCours + "\n";
-                if (tooltipText.Length > 28)
-                {
-                    tooltipText = tooltipText.Substring(0, 25) + "...\n";
-                }
-            }
-
-            foreach (var text in textes)
-            {
-                string numTextbox = text.Key.Substring(6);
-                string premiereLigne = text.Value.Split('\n')[0];
-                if (premiereLigne != "")
-                {
-                    aucunTexte = false;
-                    if (premiereLigne.Length > 24)
-                    {
-                        premiereLigne = premiereLigne.Substring(0, 21) + "...";
-                    }
-                    tooltipText += numTextbox + " : " + premiereLigne + "\n";
-                }
-            }
-
-            if (aucunTexte)
-            {
-                tooltipText += "Aucun texte";
-            }
-
-            return tooltipText;
-        }
     }
 }
