@@ -242,8 +242,8 @@ namespace PressePapier.ViewModel
         {
             ClipBoardImage = (BitmapImage)System.Windows.Application.Current.FindResource("ClipBoardIcon");
             ClipBoardActivityImage = (BitmapImage)System.Windows.Application.Current.FindResource("ClipBoardActivityIcon");
-            ClipBoardIcon = new System.Drawing.Icon("ClipBoard.ico");
-            ClipBoardActivityIcon = new System.Drawing.Icon("ClipBoardActivity.ico");            
+            ClipBoardIcon = new System.Drawing.Icon(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Resources/ClipBoard.ico")).Stream);
+            ClipBoardActivityIcon = new System.Drawing.Icon(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Resources/ClipBoardActivity.ico")).Stream);            
         }
 
         private void InitProperties()
