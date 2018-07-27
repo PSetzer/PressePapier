@@ -177,6 +177,17 @@ namespace PressePapier.ViewModel
             }
         }
 
+        private bool _activated;
+        public bool Activated
+        {
+            get { return _activated; }
+            set
+            {
+                _activated = value;
+                OnPropertyChanged("Activated");
+            }
+        }
+
         private ImageSource _appIcon;
         public ImageSource AppIcon
         {
@@ -295,7 +306,13 @@ namespace PressePapier.ViewModel
 
         private void OnHotKeyShowWindow(HotKey hotKey)
         {
-            AppVisibility = AppVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+            if (AppVisibility == Visibility.Hidden)
+            {
+                AppVisibility = Visibility.Visible;
+                Activated = true;
+            }
+            else
+                AppVisibility = Visibility.Hidden;
         }
 
         public void ModifToucheRaccourci(string buttonName)
@@ -390,7 +407,7 @@ namespace PressePapier.ViewModel
         }
         #endregion gestion textes
 
-        #region traitements éphémères
+        #region notifications
         private async Task NotifCopy()
         {
             _nIcon.Icon = ClipBoardActivityIcon;
@@ -405,7 +422,7 @@ namespace PressePapier.ViewModel
             LblNotifEnregVisibility = Visibility.Visible;
             await Task.Delay(4000);
             LblNotifEnregVisibility = Visibility.Hidden;
-        }   
-        #endregion traitements éphémères
+        }
+        #endregion notifications
     }
 }

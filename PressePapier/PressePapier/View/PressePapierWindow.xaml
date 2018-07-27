@@ -1,11 +1,14 @@
 ﻿<Window x:Class="PressePapier.View.PressePapierWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:viewmodel="clr-namespace:PressePapier.ViewModel"
-        Title="PressePapier" Visibility="{Binding AppVisibility, Mode=TwoWay}" Icon="{Binding AppIcon, Mode=TwoWay}" WindowStyle="None" Name="PressePapier"
-        AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" WindowState="{Binding AppWindowState, Mode=TwoWay}" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" mc:Ignorable="d"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="Auto" Width="390"
-        SizeToContent="Height" Loaded="Window_Loaded" Deactivated="Window_Deactivated" BorderBrush="#FF084DB4" BorderThickness="2">
+        mc:Ignorable="d"
+        Title="PressePapier" Visibility="{Binding AppVisibility, Mode=TwoWay}" Icon="{Binding AppIcon, Mode=TwoWay}" WindowState="{Binding AppWindowState, Mode=TwoWay}"
+        WindowStyle="None" Name="PressePapier" AllowDrop="True" AllowsTransparency="True" ResizeMode="CanMinimize" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FFE6E6E6" 
+        Height="Auto" Width="390" SizeToContent="Height" Loaded="Window_Loaded" Deactivated="Window_Deactivated" BorderBrush="#FF084DB4" BorderThickness="2">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -22,6 +25,10 @@
     <d:DesignProperties.DataContext>
         <viewmodel:DesignPressePapierWindow/>
     </d:DesignProperties.DataContext>
+
+    <i:Interaction.Behaviors>
+        <viewmodel:ActivateBehavior Activated="{Binding Activated, Mode=TwoWay}"/>
+    </i:Interaction.Behaviors>
 
     <Grid Name="windowGrid" Height="Auto">
         <Grid.RowDefinitions>
